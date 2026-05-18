@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Giulia & Lorenzo | Invito Matrimonio</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sand-pearl': '#E6D5C3',
+                        'sand-light': '#F7F3EE', // Sfondo base
+                        'ocean-blue': '#2B5B84',
+                        'ocean-dark': '#1A365D',
+                        'paper': '#FCFBF9'
+                    },
+                    fontFamily: {
+                        'cursive': ['"Great Vibes"', 'cursive'], 
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'sans': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* === RESET & BASE === */
+        html, body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background-color: #F7F3EE; 
+        }
+
+        /* === UNBOXING LAYER === */
+        #unboxing-layer {
+            transition: opacity 1.5s ease-in-out;
+            will-change: opacity;
+        }
+
+        .wax-seal-static {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2), inset 0 0 15px rgba(0,0,0,0.4);
+        }
+
+        /* === HERO TEXT ANIMATION === */
+        .hero-text-anim {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .hero-text-anim.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.6s; }
+        .delay-2 { transition-delay: 1.2s; } /* Delay per la frase introdotta */
+        .delay-3 { transition-delay: 1.8s; }
+
+        /* === GRADIENT TRANSITION === */
+        .gradient-overlay {
+            position: absolute; bottom: -2px; left: 0; width: 100%; height: 350px;
+            background: linear-gradient(to bottom, rgba(247, 243, 238, 0) 0%, rgba(247, 243, 238, 1) 100%);
+            z-index: 10; pointer-events: none;
+        }
+
+        /* === UI CARDS === */
+        .paper-card {
+            background-color: #FCFBF9;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.03), 0 5px 15px -5px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(230, 213, 195, 0.3);
+            border-radius: 4px;
+        }
+
+        /* === ANIMAZIONI SCROLL === */
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1; transform: translateY(0);
+        }
+
+        /* === CAROUSEL GALLERIA === */
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+            width: 100%;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            min-width: 100%;
+            height: 55vh;
+            overflow: hidden;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.18);
+            transform-origin: center center;
+        }
+        @media (min-width: 768px) {
+            .carousel-slide { height: 65vh; }
+        }
+
+        /* Form Inputs */
+        .minimal-input {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid #E6D5C3;
+            padding: 10px 0; font-family: 'Montserrat', sans-serif; color: #4a4a4a; transition: border-color 0.3s ease;
+        }
+        .minimal-input:focus { outline: none; border-bottom-color: #2B5B84; }
+
+        /* FAQ & IBAN Toggles */
+        .collapsible-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-in-out, opacity 0.6s ease-in-out, margin 0.6s ease-in-out;
+        }
+        .collapsible-content.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+        
+        .faq-icon { transition: transform 0.4s ease; }
+        .faq-icon.open { transform: rotate(45deg); }
+    </style>
+</head>
+<body class="font-sans text-gray-700 antialiased selection:bg-ocean-blue selection:text-white">
+
+    <!-- AUDIO PLACEHOLDER -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/01/26/audio_d0c6ff1c36.mp3?filename=ambient-piano-amp-strings-10711.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ================= UNBOXING LAYER ================= -->
+    <div id="unboxing-layer" class="fixed inset-0 z-[100] cursor-pointer bg-sand-pearl">
+        
+        <!-- Schermata iniziale -->
+        <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-center z-20 bg-sand-pearl transition-opacity duration-700 px-5">
+            <!-- Immagine di Copertina -->
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779136993/copertina_mept0b.png" 
+                 alt="Copertina Invito" 
+                 class="w-[85%] max-w-[400px] h-auto object-contain drop-shadow-2xl animate-pulse pointer-events-none">
+        </div>
+
+        <!-- Video della busta -->
+        <video id="envelope-video" playsinline webkit-playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-10 opacity-0 transition-opacity duration-500 pointer-events-none">
+            <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779136621/video_busta_uff_gk7ejf.mp4" type="video/mp4">
+        </video>
+
+        <!-- Effetto Luminoso Magico -->
+        <div id="luminous-flash" class="absolute inset-0 bg-white z-30 opacity-0 pointer-events-none transition-opacity duration-700 ease-in"></div>
+    </div>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main id="main-content">
+        
+        <!-- 1. HERO SECTION -->
+        <section class="relative w-full h-[100svh] flex items-center justify-center overflow-hidden">
+            <!-- Video Background -->
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779030472/bagnoasciuga_npzshx.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Overlay Scuro più pronunciato per dare risalto alla nuova frase introdotta -->
+            <div class="absolute inset-0 bg-black/30 z-0"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-0"></div>
+
+            <!-- Testi Hero -->
+            <div class="relative z-10 text-center text-white px-4 flex flex-col items-center w-full mt-[-8vh]">
+                
+                <!-- Annuncio Matrimonio -->
+                <p id="hero-announce" class="hero-text-anim font-sans font-light tracking-[0.3em] text-[10px] md:text-xs uppercase drop-shadow-md text-white/90 mb-6 mt-4">
+                    Annunciano il loro matrimonio
+                </p>
+
+                <!-- Nomi -->
+                <h1 id="hero-names" class="hero-text-anim delay-1 font-cursive text-7xl md:text-[11rem] leading-none drop-shadow-lg mb-4 text-sand-light font-normal py-2">Giulia & Lorenzo</h1>
+                
+                <!-- Dettaglio Cerimonia -->
+                <p id="hero-detail" class="hero-text-anim delay-2 font-serif italic text-lg md:text-xl drop-shadow-md text-white/90 mb-2">
+                    Cerimonia Civile sulla Spiaggia
+                </p>
+
+                <!-- Data -->
+                <p id="hero-date" class="hero-text-anim delay-2 font-sans font-medium tracking-[0.2em] text-sm md:text-lg uppercase drop-shadow-md text-white mt-2 mb-8">
+                    20 Giugno 2026
+                </p>
+
+                <!-- Frase Iniziale -->
+                <p id="hero-intro" class="hero-text-anim delay-3 font-serif italic text-xl md:text-3xl text-white mt-4 max-w-3xl leading-relaxed drop-shadow-lg px-2">
+                    "Siamo pronti a scriverne un nuovo ricordo, il più importante di tutti. E vogliamo farlo circondati dalle persone che amiamo!"
+                </p>
+            </div>
+
+            <!-- Sfumatura Morbida verso lo sfondo Sabbia -->
+            <div class="gradient-overlay"></div>
+        </section>
+
+        <!-- CONTENITORE PRINCIPALE -->
+        <div class="bg-sand-light relative z-20 pb-24">
+            
+            <!-- 2. COUNTDOWN -->
+            <div class="max-w-4xl mx-auto px-5 pt-12 md:pt-16">
+                <section class="paper-card p-10 md:p-14 text-center reveal">
+                    <h2 class="font-serif text-3xl md:text-4xl italic text-ocean-dark mb-8">Il nostro grande giorno si avvicina</h2>
+                    
+                    <div id="countdown" class="flex justify-center gap-6 md:gap-12 font-serif text-ocean-blue">
+                        <div class="flex flex-col"><span id="days" class="text-5xl md:text-6xl">00</span><span class="text-[10px] md:text-xs uppercase tracking-widest mt-2 text-ocean-dark/60">Giorni</span></div>
+                        <div class="text-5xl md:text-6xl font-light opacity-30">:</div>
+                        <div class="flex flex-col"><span id="hours" class="text-5xl md:text-6xl">00</span><span class="text-[10px] md:text-xs uppercase tracking-widest mt-2 text-ocean-dark/60">Ore</span></div>
+                        <div class="text-5xl md:text-6xl font-light opacity-30">:</div>
+                        <div class="flex flex-col"><span id="minutes" class="text-5xl md:text-6xl">00</span><span class="text-[10px] md:text-xs uppercase tracking-widest mt-2 text-ocean-dark/60">Min</span></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- DIVISORE LINEA 1 A TUTTO SCHERMO -->
+            <div class="w-full overflow-hidden py-16 md:py-20 reveal">
+                <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png" 
+                     alt="Decorazione" 
+                     class="w-full h-24 md:h-40 object-cover object-center opacity-30 mix-blend-multiply">
+            </div>
+
+            <!-- 3. RSVP -->
+            <div class="max-w-4xl mx-auto px-5">
+                <section class="paper-card p-10 md:p-14 text-center reveal">
+                    <h2 class="font-serif text-4xl md:text-5xl italic text-ocean-dark mb-6">Conferma Presenza</h2>
+                    <p class="font-sans font-light text-gray-600 mb-8 leading-relaxed text-sm md:text-base max-w-xl mx-auto">
+                        Vi preghiamo di confermare la vostra partecipazione entro il 20 Maggio 2026. Fateci sapere se avete intolleranze, allergie o preferenze per menu vegetariani.
+                    </p>
+
+                    <form class="space-y-8 text-left max-w-lg mx-auto" onsubmit="event.preventDefault(); alert('Conferma inviata con successo!');">
+                        <div>
+                            <input type="text" placeholder="Nome e Cognome" required class="minimal-input text-lg">
+                        </div>
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <label class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wider block mb-2">Numero Adulti</label>
+                                <select class="minimal-input text-lg" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4+</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] md:text-xs text-gray-400 uppercase tracking-wider block mb-2">Numero Bambini</label>
+                                <select class="minimal-input text-lg">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <textarea placeholder="Intolleranze, allergie o note particolari..." rows="2" class="minimal-input resize-none text-lg"></textarea>
+                        </div>
+                        <div class="pt-6 text-center">
+                            <button type="submit" class="bg-ocean-dark text-white font-sans text-sm tracking-widest uppercase py-5 px-12 hover:bg-ocean-blue transition-colors duration-300 w-full md:w-auto">
+                                Confermo
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <!-- DIVISORE FIORI 1 A TUTTO SCHERMO -->
+            <div class="w-full overflow-hidden py-16 md:py-24 reveal">
+                <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png" 
+                     alt="Decorazione Floreale" 
+                     class="w-full h-48 md:h-64 object-cover object-center opacity-25 mix-blend-multiply">
+            </div>
+
+            <!-- 4. PROGRAMMA & 5. DRESS CODE -->
+            <div class="max-w-4xl mx-auto px-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 reveal">
+                    <!-- Programma -->
+                    <section class="paper-card p-10 flex flex-col justify-center h-full">
+                        <h2 class="font-serif text-3xl md:text-4xl italic text-ocean-dark mb-8 text-center">Programma della giornata</h2>
+                        <ul class="space-y-6 font-sans font-light text-sm md:text-base text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-ocean-blue font-medium mr-4 text-lg mt-[-2px]">18:00</span>
+                                <span>Cerimonia sulla spiaggia <br><span class="text-xs md:text-sm italic text-gray-400">(Rito Civile)</span></span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-ocean-blue font-medium mr-4 text-lg mt-[-2px]">19:30</span>
+                                <span>Aperitivo di Benvenuto</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-ocean-blue font-medium mr-4 text-lg mt-[-2px]">21:00</span>
+                                <span>Cena e Festa</span>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- Dress Code -->
+                    <section class="paper-card p-10 text-center flex flex-col justify-center h-full">
+                        <h2 class="font-serif text-3xl md:text-4xl italic text-ocean-dark mb-6">Dress Code</h2>
+                        <p class="font-sans font-light text-gray-600 leading-relaxed text-sm md:text-base">
+                            Trattandosi di una cerimonia sulla sabbia, vi invitiamo a prediligere abiti comodi e calzature pratiche. 
+                        </p>
+                        <p class="font-serif italic text-ocean-blue/70 mt-6 text-lg">
+                            Piedi nudi sempre ben accetti!
+                        </p>
+                    </section>
+                </div>
+            </div>
+
+            <!-- DIVISORE LINEA 2 A TUTTO SCHERMO -->
+            <div class="w-full overflow-hidden py-16 md:py-24 reveal">
+                <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png" 
+                     alt="Decorazione Linea" 
+                     class="w-full h-24 md:h-40 object-cover object-center opacity-30 mix-blend-multiply">
+            </div>
+
+            <!-- 6. GALLERIA CAROUSEL -->
+            <div class="max-w-6xl mx-auto px-0 md:px-5">
+                <section class="text-center pt-4 reveal">
+                    <h2 class="font-serif text-4xl md:text-5xl italic text-ocean-dark mb-8">I nostri ricordi</h2>
+                    
+                    <div class="relative w-full group">
+                        <div class="carousel-container rounded-none md:rounded-sm shadow-md">
+                            <div class="carousel-track" id="carouselTrack">
+                                <!-- Slides (Con Zoom in CSS) -->
+                                <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779030127/Gemini_Generated_Image_f64u45f64u45f64u_2_mpelzf.png" alt="Gallery 1"></div>
+                                <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779030088/piedi2_mcnbqs.png" alt="Gallery 2"></div>
+                                <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779030126/Gemini_Generated_Image_f64u45f64u45f64u_1_fmtsry.png" alt="Gallery 3"></div>
+                                <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779030125/Gemini_Generated_Image_f64u45f64u45f64u_3_pheg8r.png" alt="Gallery 4"></div>
+                                <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779030072/Mare_dvm7jk.png" alt="Gallery 5"></div>
+                                <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779030126/Gemini_Generated_Image_f64u45f64u45f64u_o51ma5.png" alt="Gallery 6"></div>
+                                <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779030111/Gemini_Generated_Image_f64u45f64u45f64u_4_tpnjnv.png" alt="Gallery 7"></div>
+                            </div>
+                        </div>
+
+                        <!-- Pulsanti di Navigazione -->
+                        <button id="prevBtn" class="absolute left-2 md:-left-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-ocean-dark p-3 md:p-4 rounded-full shadow-lg opacity-100 md:opacity-0 group-hover:opacity-100 transition-all z-10 focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <button id="nextBtn" class="absolute right-2 md:-right-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-ocean-dark p-3 md:p-4 rounded-full shadow-lg opacity-100 md:opacity-0 group-hover:opacity-100 transition-all z-10 focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- DIVISORE FIORI 2 A TUTTO SCHERMO -->
+            <div class="w-full overflow-hidden py-16 md:py-24 reveal">
+                <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png" 
+                     alt="Decorazione Floreale" 
+                     class="w-full h-48 md:h-64 object-cover object-center opacity-25 mix-blend-multiply">
+            </div>
+
+            <div class="max-w-4xl mx-auto px-5">
+                
+                <!-- 7. FAQ (Info Utili) -->
+                <section class="paper-card p-10 md:p-14 text-left reveal mb-12">
+                    <h2 class="font-serif text-3xl md:text-4xl italic text-ocean-dark mb-8 text-center">Info Utili</h2>
+                    
+                    <div class="space-y-4">
+                        <!-- FAQ 1 -->
+                        <div class="border-b border-sand-pearl/50 pb-4 cursor-pointer" onclick="toggleFaq('faq-1', 'icon-1')">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-sans text-sm md:text-base font-medium text-ocean-dark">I bambini sono i benvenuti?</h3>
+                                <svg id="icon-1" class="faq-icon w-5 h-5 text-ocean-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            </div>
+                            <div id="faq-1" class="collapsible-content">
+                                <p class="text-sm font-light text-gray-600 mt-3 leading-relaxed">Assolutamente sì! Sarà una gioia immensa averli con noi. Abbiamo previsto un menù bimbi dedicato e organizzeremo un'area con animazione sulla spiaggia per farli giocare e divertire in sicurezza.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 2 -->
+                        <div class="border-b border-sand-pearl/50 pb-4 cursor-pointer" onclick="toggleFaq('faq-2', 'icon-2')">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-sans text-sm md:text-base font-medium text-ocean-dark">C'è un parcheggio vicino alla location?</h3>
+                                <svg id="icon-2" class="faq-icon w-5 h-5 text-ocean-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            </div>
+                            <div id="faq-2" class="collapsible-content">
+                                <p class="text-sm font-light text-gray-600 mt-3 leading-relaxed">Sì, la location dispone di un comodo parcheggio privato e gratuito riservato esclusivamente ai nostri ospiti, situato proprio all'ingresso della struttura.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="border-b border-sand-pearl/50 pb-4 cursor-pointer" onclick="toggleFaq('faq-3', 'icon-3')">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-sans text-sm md:text-base font-medium text-ocean-dark">Dove possiamo pernottare?</h3>
+                                <svg id="icon-3" class="faq-icon w-5 h-5 text-ocean-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            </div>
+                            <div id="faq-3" class="collapsible-content">
+                                <p class="text-sm font-light text-gray-600 mt-3 leading-relaxed">Abbiamo selezionato alcuni incantevoli B&B e Hotel nelle immediate vicinanze per chi desidera fermarsi dopo la festa. Scriveteci in privato e vi manderemo volentieri la lista con tutti i dettagli!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. IBAN (Con pulsante a comparsa) -->
+                <section class="paper-card p-10 md:p-14 text-center reveal">
+                    <h2 class="font-serif text-3xl md:text-4xl italic text-ocean-dark mb-6">Lista Nozze</h2>
+                    <p class="font-sans font-light text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto text-sm md:text-base">
+                        La vostra presenza è il regalo più grande che possiamo desiderare. Se volete comunque farci un pensiero, potete aiutarci a realizzare il nostro viaggio di nozze.
+                    </p>
+                    
+                    <button id="iban-toggleBtn" class="bg-ocean-dark text-white font-sans text-xs tracking-widest uppercase py-4 px-8 hover:bg-ocean-blue transition-colors duration-300 rounded shadow-md">
+                        Mostra IBAN
+                    </button>
+
+                    <div id="iban-content" class="collapsible-content">
+                        <div class="inline-block border border-sand-pearl/50 p-6 md:p-8 mt-6 rounded bg-white/50 backdrop-blur-sm">
+                            <p class="font-sans text-[10px] md:text-xs uppercase tracking-widest text-gray-400 mb-3">Intestato a Giulia & Lorenzo</p>
+                            <p class="font-serif text-xl md:text-2xl text-ocean-dark tracking-wider font-medium">IT99 X123 4567 8900 0000 1234 567</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 9. LA PARTY APP -->
+                <section class="paper-card p-10 md:p-14 text-center reveal mt-12 bg-gradient-to-b from-paper to-[#f3efe8]">
+                    <!-- Minimalist Camera SVG -->
+                    <svg class="w-14 h-14 mx-auto text-ocean-blue mb-6 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    
+                    <h2 class="font-serif text-3xl md:text-4xl italic text-ocean-dark mb-6">Condividi le tue foto</h2>
+                    <p class="font-sans font-light text-gray-600 leading-relaxed text-sm md:text-base max-w-lg mx-auto">
+                        Durante la festa, inquadrate il QR Code che troverete sui tavoli per accedere all'App dedicata e condividere tutte le foto che farete con noi!
+                    </p>
+                </section>
+            </div>
+
+            <!-- FOOTER SALUTI -->
+            <footer class="w-full py-10 text-center reveal mt-8">
+                <p class="font-sans text-[10px] md:text-xs tracking-widest text-gray-400 uppercase">
+                    Creato con <span class="text-red-600 text-sm mx-1">&hearts;</span> da <a href="https://www.announceyourday.com" target="_blank" class="hover:text-ocean-blue transition-colors duration-300 underline underline-offset-4">Announceyourday.com</a>
+                </p>
+            </footer>
+            
+        </div>
+    </main>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- 1. GESTIONE UNBOXING & AUDIO ---
+            const unboxingLayer = document.getElementById('unboxing-layer');
+            const startScreen = document.getElementById('start-screen');
+            const envelopeVideo = document.getElementById('envelope-video');
+            const luminousFlash = document.getElementById('luminous-flash');
+            const audio = document.getElementById('bg-music');
+            const heroAnnounce = document.getElementById('hero-announce');
+            const heroNames = document.getElementById('hero-names');
+            const heroDetail = document.getElementById('hero-detail');
+            const heroDate = document.getElementById('hero-date');
+            const heroIntro = document.getElementById('hero-intro');
+            
+            document.body.style.overflow = 'hidden';
+            window.scrollTo(0,0);
+
+            let isUnboxingStarted = false;
+
+            unboxingLayer.addEventListener('click', () => {
+                if (isUnboxingStarted) return;
+                isUnboxingStarted = true;
+
+                // Forza il mute per bypassare blocchi del browser e prepara il video
+                envelopeVideo.muted = true;
+
+                // Gestione Audio di Sottofondo
+                audio.volume = 0.3; 
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => console.log("Autoplay audio bloccato."));
+                }
+
+                // Nascondi schermata iniziale e mostra video
+                startScreen.style.opacity = '0';
+                envelopeVideo.style.opacity = '1';
+                
+                // Avvia video con gestione dell'errore (fallback)
+                const videoPromise = envelopeVideo.play();
+                if (videoPromise !== undefined) {
+                    videoPromise.catch(e => {
+                        console.log("Autoplay video bloccato:", e);
+                        endUnboxing(); // Fallback se il dispositivo blocca il video
+                    });
+                }
+
+                setTimeout(() => {
+                    startScreen.style.display = 'none';
+                }, 700);
+            });
+
+            // Monitora il tempo del video per l'effetto luminoso
+            envelopeVideo.addEventListener('timeupdate', () => {
+                if (!isNaN(envelopeVideo.duration)) {
+                    const timeRemaining = envelopeVideo.duration - envelopeVideo.currentTime;
+                    // Attiva il flash luminoso bianco a 0.8 secondi dalla fine del video
+                    if (timeRemaining <= 0.8 && timeRemaining > 0 && luminousFlash.style.opacity === '0') {
+                        luminousFlash.style.opacity = '1';
+                    }
+                }
+            });
+
+            // Quando il video finisce
+            envelopeVideo.addEventListener('ended', endUnboxing);
+
+            function endUnboxing() {
+                // Assicurati che il flash sia attivo
+                luminousFlash.style.opacity = '1';
+                
+                // Dissolvenza dell'intero layer unboxing (video + flash luminoso)
+                unboxingLayer.style.opacity = '0';
+                
+                setTimeout(() => {
+                    unboxingLayer.style.display = 'none';
+                    document.body.style.overflow = ''; 
+                    
+                    // Apparizione morbida testi Hero
+                    if(heroAnnounce) heroAnnounce.classList.add('loaded');
+                    if(heroNames) heroNames.classList.add('loaded');
+                    if(heroDetail) heroDetail.classList.add('loaded');
+                    if(heroDate) heroDate.classList.add('loaded');
+                    if(heroIntro) heroIntro.classList.add('loaded');
+
+                    initScrollObserver();
+                }, 1500); // Attende la transizione CSS del layer
+            }
+
+            // --- 2. COUNTDOWN LOGIC ---
+            const targetDate = new Date("June 20, 2026 18:00:00").getTime();
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+                if (distance < 0) return;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+            }
+            setInterval(updateCountdown, 60000); 
+            updateCountdown(); 
+
+            // --- 3. CAROUSEL GALLERIA LOGIC ---
+            const track = document.getElementById('carouselTrack');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            
+            let currentIndex = 0;
+            let autoSlideInterval;
+
+            function goToSlide(index) {
+                if (index < 0) {
+                    currentIndex = slides.length - 1;
+                } else if (index >= slides.length) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex = index;
+                }
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(() => {
+                    goToSlide(currentIndex + 1);
+                }, 4000); 
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                startAutoSlide();
+            }
+
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentIndex + 1);
+                resetAutoSlide();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentIndex - 1);
+                resetAutoSlide();
+            });
+
+            startAutoSlide();
+
+
+            // --- 4. FADE-UP ANIMATIONS ON SCROLL ---
+            function initScrollObserver() {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+                document.querySelectorAll('.reveal').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
+            // --- 5. LOGICA IBAN TOGGLE ---
+            const ibanBtn = document.getElementById('iban-toggleBtn');
+            const ibanContent = document.getElementById('iban-content');
+            
+            ibanBtn.addEventListener('click', () => {
+                if(ibanContent.classList.contains('open')){
+                    ibanContent.classList.remove('open');
+                    ibanBtn.innerText = "Mostra IBAN";
+                } else {
+                    ibanContent.classList.add('open');
+                    ibanBtn.innerText = "Nascondi IBAN";
+                }
+            });
+        });
+
+        // --- 6. LOGICA FAQ ACCORDION ---
+        function toggleFaq(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            
+            if(content.classList.contains('open')){
+                content.classList.remove('open');
+                icon.classList.remove('open');
+            } else {
+                content.classList.add('open');
+                icon.classList.add('open');
+            }
+        }
+    </script>
+</body>
+</html>
