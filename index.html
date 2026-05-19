@@ -151,16 +151,20 @@
     <!-- ================= UNBOXING LAYER ================= -->
     <div id="unboxing-layer" class="fixed inset-0 z-[100] cursor-pointer bg-sand-pearl">
         
-        <!-- Schermata iniziale -->
-        <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-center z-20 bg-sand-pearl transition-opacity duration-700 px-5">
-            <!-- Immagine di Copertina -->
-            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779136993/copertina_mept0b.png" 
+        <!-- Schermata iniziale (Copertina generata dal frame 0 del video) -->
+        <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-center z-20 transition-opacity duration-300">
+            <img src="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg" 
                  alt="Copertina Invito" 
-                 class="w-[85%] max-w-[400px] h-auto object-contain drop-shadow-2xl animate-pulse pointer-events-none">
+                 class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+            
+            <!-- Testo pulsante per invitare al tocco -->
+            <div class="relative z-30 flex flex-col items-center animate-pulse mt-[40vh]">
+                <span class="text-white/90 text-xs md:text-sm tracking-[0.3em] uppercase font-bold drop-shadow-lg bg-black/20 px-4 py-2 rounded-full backdrop-blur-sm">Tocca per aprire</span>
+            </div>
         </div>
 
-        <!-- Video della busta -->
-        <video id="envelope-video" playsinline webkit-playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-10 opacity-0 transition-opacity duration-500 pointer-events-none">
+        <!-- Video della busta (Sempre visibile sotto l'immagine, in attesa del play) -->
+        <video id="envelope-video" playsinline webkit-playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none">
             <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779136621/video_busta_uff_gk7ejf.mp4" type="video/mp4">
         </video>
 
@@ -459,60 +463,58 @@
         document.addEventListener("DOMContentLoaded", () => {
             
             // --- 1. GESTIONE UNBOXING & AUDIO ---
-            const unboxingLayer = document.getElementById('unboxing-layer');
-            const startScreen = document.getElementById('start-screen');
-            const envelopeVideo = document.getElementById('envelope-video');
-            const luminousFlash = document.getElementById('luminous-flash');
-            const audio = document.getElementById('bg-music');
-            const heroAnnounce = document.getElementById('hero-announce');
-            const heroNames = document.getElementById('hero-names');
-            const heroDetail = document.getElementById('hero-detail');
-            const heroDate = document.getElementById('hero-date');
-            const heroIntro = document.getElementById('hero-intro');
+        const unboxingLayer = document.getElementById('unboxing-layer');
+        const startScreen = document.getElementById('start-screen');
+        const envelopeVideo = document.getElementById('envelope-video');
+        const luminousFlash = document.getElementById('luminous-flash');
+        const audio = document.getElementById('bg-music');
+        const heroAnnounce = document.getElementById('hero-announce');
+        const heroNames = document.getElementById('hero-names');
+        const heroDetail = document.getElementById('hero-detail');
+        const heroDate = document.getElementById('hero-date');
+        const heroIntro = document.getElementById('hero-intro');
+        
+        document.body.style.overflow = 'hidden';
+        window.scrollTo(0,0);
+
+        let isUnboxingStarted = false;
+
+        unboxingLayer.addEventListener('click', () => {
+            if (isUnboxingStarted) return;
+            isUnboxingStarted = true;
+
+            // Forza il mute per bypassare blocchi del browser
+            envelopeVideo.muted = true;
+
+            // Gestione Audio di Sottofondo
+            audio.volume = 0.3; 
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(e => console.log("Autoplay audio bloccato."));
+            }
+
+            // Nascondi istantaneamente l'immagine copertina per rivelare il video sottostante
+            startScreen.style.opacity = '0';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+            }, 300);
             
-            document.body.style.overflow = 'hidden';
-            window.scrollTo(0,0);
+            // Avvia video
+            const videoPromise = envelopeVideo.play();
+            if (videoPromise !== undefined) {
+                videoPromise.catch(e => {
+                    console.log("Autoplay video bloccato:", e);
+                    endUnboxing(); // Fallback se il dispositivo blocca il video
+                });
+            }
+        });
 
-            let isUnboxingStarted = false;
-
-            unboxingLayer.addEventListener('click', () => {
-                if (isUnboxingStarted) return;
-                isUnboxingStarted = true;
-
-                // Forza il mute per bypassare blocchi del browser e prepara il video
-                envelopeVideo.muted = true;
-
-                // Gestione Audio di Sottofondo
-                audio.volume = 0.3; 
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(e => console.log("Autoplay audio bloccato."));
-                }
-
-                // Nascondi schermata iniziale e mostra video
-                startScreen.style.opacity = '0';
-                envelopeVideo.style.opacity = '1';
-                
-                // Avvia video con gestione dell'errore (fallback)
-                const videoPromise = envelopeVideo.play();
-                if (videoPromise !== undefined) {
-                    videoPromise.catch(e => {
-                        console.log("Autoplay video bloccato:", e);
-                        endUnboxing(); // Fallback se il dispositivo blocca il video
-                    });
-                }
-
-                setTimeout(() => {
-                    startScreen.style.display = 'none';
-                }, 700);
-            });
-
-            // Monitora il tempo del video per l'effetto luminoso
-            envelopeVideo.addEventListener('timeupdate', () => {
+        // Monitora il tempo del video per l'effetto luminoso
+        envelopeVideo.addEventListener('timeupdate', () => {
                 if (!isNaN(envelopeVideo.duration)) {
                     const timeRemaining = envelopeVideo.duration - envelopeVideo.currentTime;
-                    // Attiva il flash luminoso bianco a 0.8 secondi dalla fine del video
-                    if (timeRemaining <= 0.8 && timeRemaining > 0 && luminousFlash.style.opacity === '0') {
+                    // Attiva il flash luminoso bianco a 1.2 secondi dalla fine del video (mentre il lembo sale)
+                    if (timeRemaining <= 1.2 && timeRemaining > 0 && luminousFlash.style.opacity === '0') {
                         luminousFlash.style.opacity = '1';
                     }
                 }
