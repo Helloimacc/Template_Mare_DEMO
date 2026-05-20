@@ -2,469 +2,897 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Save the Date | Michela & Maurizio</title>
-    
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Giulia & Lorenzo · 20 Giugno 2027</title>
 
-        const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbx_d3SCi-dCVuJKi1VkAzfH1cXN6jFWZJO-UqqnSlSstaQgBtNLBwSDtOmo0QzsEeEd/exec"; 
+    <!-- Open Graph / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Giulia & Lorenzo ✦ 20 Giugno 2027 · Sardegna">
+    <meta property="og:description" content="Due anime, una sola storia. Hai ricevuto il nostro invito digitale esclusivo. Apri per scoprire tutti i dettagli della nostra celebrazione.">
+    <meta property="og:image" content="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg?tr=w-1200,h-630,f-auto,q-80,c-fill">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="it_IT">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Giulia & Lorenzo ✦ 20 Giugno 2027">
+    <meta name="twitter:description" content="Hai ricevuto il nostro invito digitale esclusivo.">
+    <meta name="twitter:image" content="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg?tr=w-1200,h-630,f-auto,q-80,c-fill">
+    <!-- Creato con ❤️ da announceyourday.com -->
 
-        let db = null;
-        let auth = null;
-        let appId = 'wedding-app';
-
-        try {
-            if (typeof __firebase_config !== 'undefined') {
-                const firebaseConfig = JSON.parse(__firebase_config);
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-                const initAuth = async () => {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                };
-                initAuth();
-            }
-        } catch (e) {
-            console.log("Ambiente esterno: Solo Google Sheets attivo.");
-        }
-
-        window.submitRSVP = async (event) => {
-            if (event) event.preventDefault();
-            const btn = document.getElementById('submit-rsvp-btn');
-            const form = document.getElementById('rsvp-form');
-            const feedback = document.getElementById('rsvp-feedback');
-            
-            btn.disabled = true;
-            btn.innerText = "REGISTRAZIONE IN CORSO...";
-
-            const formData = {
-                names: form.names.value,
-                guests: form.guests.value,
-                notes: form.notes.value,
-                timestamp: new Date().toLocaleString('it-IT')
-            };
-
-            try {
-                if (db && auth && auth.currentUser) {
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'presenze'), {
-                        ...formData,
-                        timestamp: serverTimestamp(),
-                        userId: auth.currentUser.uid
-                    });
-                }
-                if (GOOGLE_SHEET_URL) {
-                    await fetch(GOOGLE_SHEET_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-                }
-                form.style.display = 'none';
-                feedback.innerHTML = `
-                    <div style="padding: 40px 20px; text-align: center; animation: fadeIn 1s ease;">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" style="margin-bottom: 20px;">
-                            <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <h3 style="font-family: var(--font-serif); color: var(--accent-dark); font-style: italic; font-size: 1.8rem; margin-bottom: 10px;">Grazie di cuore</h3>
-                        <p style="font-family: var(--font-sans); color: #666; font-size: 0.9rem; letter-spacing: 1px;">La vostra partecipazione è stata registrata correttamente.</p>
-                    </div>`;
-            } catch (error) {
-                btn.disabled = false;
-                btn.innerText = "INVIA CONFERMA";
-                feedback.innerText = "Errore. Riprova più tardi.";
-                feedback.style.color = "red";
-            }
-            return false;
-        };
-    </script>
-    
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Great+Vibes&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sand':       '#E8D9C4',
+                        'sand-light': '#F5F0E8',
+                        'ocean':      '#2C5F84',
+                        'ocean-deep': '#193A55',
+                        'blush':      '#C4A882',
+                        'ivory':      '#FEFCF8',
+                    },
+                    fontFamily: {
+                        'script': ['"Great Vibes"', 'cursive'],
+                        'serif':  ['"Cormorant Garamond"', 'serif'],
+                        'sans':   ['Jost', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         :root {
-            --bg-color: #FAF8F5;
-            --text-main: #2C2A29; 
-            --accent: #D4AF37;
-            --accent-dark: #B5952F;
-            --paper-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            --font-cursive: 'Great Vibes', cursive;
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Montserrat', sans-serif;
+            --sand:       #E8D9C4;
+            --sand-light: #F5F0E8;
+            --ocean:      #2C5F84;
+            --ocean-deep: #193A55;
+            --ivory:      #FEFCF8;
+            --blush:      #C4A882;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { background-color: var(--bg-color); color: var(--text-main); font-family: var(--font-sans); width: 100%; height: 100%; overflow-x: hidden; overflow-y: hidden; scroll-behavior: smooth; }
-        #intro-section { height: 100vh; width: 100vw; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; position: fixed; top: 0; left: 0; z-index: 100; background-color: var(--bg-color); perspective: 2000px; }
-        #intro-section.dive-in { transform-origin: 50% 50%; transform: scale(35) translateZ(0); opacity: 0; transition: transform 1.8s cubic-bezier(0.64, 0, 0.78, 0), opacity 1.2s ease 0.6s; pointer-events: none; }
-        .handwriting-container { position: absolute; top: 35%; width: 95%; max-width: 1100px; text-align: center; transition: opacity 1.5s ease, transform 1.5s ease; z-index: 10; }
-        .handwriting-container.fade-up { opacity: 0; transform: translateY(-40px); pointer-events: none; }
-        .svg-text { font-family: var(--font-cursive); font-size: 80px; fill: transparent; stroke: var(--accent); stroke-width: 0.7px; stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: writeText 3.5s ease-in-out forwards, fillText 1s 3s forwards; }
-        @media (min-width: 768px) { .svg-text { font-size: 140px; } }
-        @keyframes writeText { to { stroke-dashoffset: 0; } }
-        @keyframes fillText { to { fill: var(--accent); stroke-width: 0; } }
-        .save-the-date-text { font-family: var(--font-serif); font-size: 2.2rem; letter-spacing: 6px; opacity: 0; position: absolute; top: 45%; left: 50%; transform: translate(-50%, 20px); transition: opacity 1.5s ease, transform 1.5s ease; text-align: center; font-weight: 400; color: var(--text-main); width: 100%; padding: 0 20px; z-index: 10; }
-        .save-the-date-text.visible { opacity: 1; transform: translate(-50%, 0); }
-        .save-the-date-text.evaporate { transform: translate(-50%, -40px); letter-spacing: 10px; opacity: 0; transition: transform 1.5s ease-out, letter-spacing 1.5s ease-out, opacity 1.5s ease-out; }
-        
-        .envelope-wrapper { position: absolute; top: 50%; left: 50%; width: max(100vw, 150vh); height: max(100vh, 66.66vw); transform: translate(-50%, 150vh) scale(0.9); transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1); cursor: pointer; z-index: 20; transform-style: preserve-3d; }
-        .envelope-wrapper.visible { transform: translate(-50%, -50%) scale(1); }
-        .envelope-wrapper.opening { transform: translate(-50%, -50%) scale(0.95); transition: transform 2.5s ease-in-out; }
-        
-        /* --- NUOVA BUSTA VELLUM --- */
-        .vellum-envelope { width: 100%; height: 100%; position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.1); transform-style: preserve-3d; }
-        
-        .invitation-card-inside { position: absolute; inset: 0; background: var(--bg-color); background-image: var(--paper-texture); border-radius: 2px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .invitation-card-inside::before { content: ''; position: absolute; inset: -5%; background-image: url('https://drive.google.com/thumbnail?id=1Asx9_6mh0hkIE7s5WXSE3WO5aBc-3LaU&sz=w1200'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 1; z-index: 1; transform: scale(1.4); filter: drop-shadow(0 15px 30px rgba(0,0,0,0.15)); transition: transform 2.5s ease-in-out; will-change: transform; }
-        
-        .vellum-flap { position: absolute; top: 0; height: 100%; width: 50%; background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 5; transition: transform 2.5s ease-in-out; transform-style: preserve-3d; background-image: var(--paper-texture); will-change: transform; }
-        
-        .flap-left { left: 0; transform-origin: left center; border-right: 1px solid rgba(255, 255, 255, 0.4); box-shadow: inset -2px 0 15px rgba(255,255,255,0.3); }
-        .flap-right { right: 0; transform-origin: right center; border-left: 1px solid rgba(255, 255, 255, 0.4); box-shadow: inset 2px 0 15px rgba(255,255,255,0.3); }
-        
-        @keyframes floatSeal {
-            0%, 100% { transform: translate(-50%, -50%); box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.9), 5px 5px 12px rgba(190, 180, 165, 0.6), inset 1px 1px 2px rgba(255, 255, 255, 0.9), inset -1px -1px 3px rgba(190, 180, 165, 0.3); }
-            50% { transform: translate(-50%, -54%); box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.9), 8px 8px 18px rgba(190, 180, 165, 0.4), inset 1px 1px 2px rgba(255, 255, 255, 0.9), inset -1px -1px 3px rgba(190, 180, 165, 0.3); }
-        }
-        
-        .wax-seal { position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); width: 90px; height: 90px; background: #EADECB; border-radius: 51% 49% 52% 48% / 48% 52% 49% 51%; z-index: 10; box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.9), 5px 5px 12px rgba(190, 180, 165, 0.6), inset 1px 1px 2px rgba(255, 255, 255, 0.9), inset -1px -1px 3px rgba(190, 180, 165, 0.3); display: flex; justify-content: center; align-items: center; animation: floatSeal 3s ease-in-out infinite; pointer-events: none; }
-        
-        .wax-seal-inner { width: 72%; height: 72%; border-radius: 50%; background: #E1D2BC; box-shadow: inset 3px 3px 6px rgba(190, 180, 165, 0.7), inset -3px -3px 6px rgba(255, 255, 255, 0.9), 1px 1px 1px rgba(255, 255, 255, 0.5); display: flex; justify-content: center; align-items: center; font-family: var(--font-cursive); font-size: 2.2rem; color: #AD9B82; text-shadow: -1px -1px 2px rgba(180, 170, 155, 0.8), 1px 1px 2px rgba(255, 255, 255, 1); }
-        
-        /* Animazione d'apertura */
-        .envelope-wrapper.opening .flap-left { transform: rotateY(-140deg); }
-        .envelope-wrapper.opening .flap-right { transform: rotateY(140deg); }
-        .envelope-wrapper.opening .wax-seal { animation-play-state: paused; }
-        .envelope-wrapper.opening .invitation-card-inside::before { transform: scale(0.82); }
-        /* --- FINE NUOVA BUSTA VELLUM --- */
-        
-        #main-content { display: none; background-color: var(--bg-color); position: relative; z-index: 1; padding-top: 15vh; }
-        #first-block-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 20px; z-index: 50; opacity: 0; transform: translateY(30px) scale(0.95); transition: opacity 1.5s ease, transform 1.5s ease; pointer-events: none; }
-        #first-block-overlay.visible { opacity: 1; transform: translateY(0) scale(1); }
-        #first-block-overlay.move-up { opacity: 0; transform: translateY(-80px) scale(1.05); transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
-        #first-block-overlay .ann-intro { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.8; color: #444; font-style: italic; text-align: center; max-width: 700px; }
-        .announcement-section { padding: 0 20px; max-width: 800px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; gap: 20vh; }
-        .ann-names { font-family: var(--font-cursive); font-size: 4.8rem; color: var(--accent); line-height: 1.1; }
-        .ann-title { font-family: var(--font-sans); font-size: 1.1rem; letter-spacing: 5px; color: var(--text-main); text-transform: uppercase; margin-bottom: 15px; font-weight: 500; }
-        .date-hierarchy { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 20px 0; }
-        .date-day { font-family: var(--font-serif); font-style: italic; font-size: 1.3rem; color: #666; }
-        .date-main { font-family: var(--font-serif); font-size: 3rem; color: var(--accent-dark); letter-spacing: 4px; line-height: 1; text-shadow: 1px 1px 0px rgba(255,255,255,0.7), -1px -1px 0px rgba(0,0,0,0.05); }
-        .date-time { font-family: var(--font-sans); font-size: 0.95rem; letter-spacing: 4px; text-transform: uppercase; color: #555; font-weight: 500; }
-        .ann-location { font-family: var(--font-sans); font-size: 1.05rem; color: var(--text-main); margin-top: 25px; }
-        .ornament-divider { display: flex; flex-direction: column; align-items: center; gap: 15px; margin: -8vh 0; opacity: 0.7; }
-        .ornament-divider .line { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, var(--accent), transparent); }
-        .ornament-divider span { color: var(--accent); font-size: 1.2rem; }
-        .map-link { display: inline-flex; align-items: center; justify-content: center; margin-top: 25px; padding: 12px 30px; border: 1px solid var(--accent); border-radius: 50px; font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-dark); text-decoration: none; text-transform: uppercase; transition: all 0.4s ease; }
-        .map-link:hover { background-color: var(--accent); color: #fff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2); }
-        .rsvp-block { border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 60px; margin-bottom: 5vh; }
-        .rsvp-contacts { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-bottom: 50px; }
-        .contact-person { display: flex; flex-direction: column; gap: 8px; font-family: var(--font-sans); font-size: 0.9rem; color: var(--text-main); }
-        .contact-name { font-family: var(--font-serif); font-size: 1.6rem; color: var(--accent-dark); font-style: italic; }
-        .contact-phone { font-weight: 500; letter-spacing: 1px; font-size: 1.1rem; color: var(--text-main); text-decoration: none; transition: color 0.3s ease; position: relative; display: inline-block; }
-        .contact-phone:hover { color: var(--accent); }
-        .rsvp-form-container { background: #fff; padding: 50px 40px; border: 1px solid rgba(212, 175, 55, 0.1); border-radius: 2px; max-width: 550px; margin: 0 auto 60px; box-shadow: 0 30px 60px rgba(0,0,0,0.04); position: relative; }
-        .rsvp-form-container::before { content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px solid rgba(212, 175, 55, 0.05); pointer-events: none; }
-        .rsvp-form-container h3 { font-family: var(--font-serif); color: var(--accent-dark); margin-bottom: 35px; font-weight: 400; font-style: italic; font-size: 2rem; }
-        .form-group { margin-bottom: 25px; text-align: left; }
-        .form-group label { display: flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; color: #999; font-weight: 500; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 15px; background: #fdfbf7; border: 1px solid #f0f0f0; border-radius: 0; font-family: var(--font-sans); font-size: 0.95rem; transition: all 0.4s ease; color: var(--text-main); }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; background: #fff; border-color: var(--accent); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.05); }
-        .submit-btn { width: 100%; padding: 20px; background: var(--text-main); color: #fff; border: none; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 4px; font-size: 0.8rem; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); margin-top: 10px; }
-        .submit-btn:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-        .delayed-anim { opacity: 0; transform: translateY(50px) scale(0.92); transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
-        .delayed-anim.visible { opacity: 1; transform: translateY(0) scale(1); }
-        #partecipazione { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 20px 100px 20px; background-color: #fff; position: relative; }
-        .partecipazione-img { max-width: 100%; width: 600px; max-height: 75vh; object-fit: contain; border-radius: 4px; box-shadow: 0 25px 50px rgba(0,0,0,0.08); opacity: 0; transform: scale(1.03) translateY(20px); transition: opacity 1.5s ease, transform 2s cubic-bezier(0.25, 1, 0.5, 1); }
-        .partecipazione-img.visible { opacity: 1; transform: scale(1) translateY(0); }
-        .calendar-btn { margin-top: 50px; padding: 16px 45px; background-color: transparent; color: var(--text-main); border: 1px solid var(--accent); text-decoration: none; font-family: var(--font-sans); font-weight: 400; letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem; transition: all 0.4s ease; opacity: 0; transform: translateY(20px); position: relative; overflow: hidden; }
-        .calendar-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--accent); z-index: -1; transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease; }
-        .calendar-btn:hover { color: #fff; border-color: var(--accent); }
-        .calendar-btn:hover::before { transform: scaleX(1); transform-origin: left; }
-        .calendar-btn.visible { opacity: 1; transform: translateY(0); transition: opacity 1s ease 0.8s, transform 1s ease 0.8s; }
-        .footer-credit { position: absolute; bottom: 30px; left: 0; width: 100%; font-family: var(--font-sans); font-size: 0.75rem; color: #999; text-align: center; letter-spacing: 1px; opacity: 0.8; }
-        
-        /* --- CONTROLLO AUDIO --- */
-        .audio-toggle {
-            position: fixed; bottom: 20px; right: 20px; width: 45px; height: 45px; 
-            border-radius: 50%; background: #fff; border: 1px solid var(--accent); 
-            color: var(--accent-dark); display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.08); 
-            opacity: 0; pointer-events: none; transition: all 0.4s ease;
-        }
-        .audio-toggle.visible { opacity: 1; pointer-events: auto; }
-        .audio-toggle:hover { transform: scale(1.08); background: var(--bg-color); }
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { overflow-x: hidden; scroll-behavior: smooth; background-color: var(--sand-light); }
 
-        @media (max-width: 768px) {
-            .save-the-date-text { font-size: 1.8rem; top: 40%; }
-            .ann-names { font-size: 4rem; }
-            .date-main { font-size: 2.2rem; }
-            .rsvp-contacts { gap: 40px; flex-direction: column; }
-            .rsvp-form-container { padding: 40px 25px; width: 95%; margin-bottom: 40px; }
+        /* UNBOXING */
+        #unboxing-layer { transition: opacity 1.8s cubic-bezier(0.4,0,0.2,1); will-change: opacity; }
+        #tap-hint { animation: breathe 2.6s ease-in-out infinite; }
+        @keyframes breathe {
+            0%,100% { opacity:.75; transform:translateY(0) scale(1); }
+            50%      { opacity:1;   transform:translateY(-7px) scale(1.04); }
         }
+        #luminous-flash { transition: opacity .9s ease-in; }
+
+        /* HERO TEXT */
+        .hero-reveal {
+            opacity:0; transform:translateY(34px);
+            transition: opacity 2.6s cubic-bezier(0.16,1,0.3,1), transform 2.6s cubic-bezier(0.16,1,0.3,1);
+        }
+        .hero-reveal.visible { opacity:1; transform:translateY(0); }
+        .d1{transition-delay:.3s} .d2{transition-delay:.9s} .d3{transition-delay:1.5s}
+        .d4{transition-delay:2.0s} .d5{transition-delay:2.6s}
+
+        /* HERO GRADIENT */
+        .hero-fade {
+            position:absolute; bottom:-1px; left:0; width:100%; height:48vh;
+            background:linear-gradient(to bottom, transparent 0%, var(--sand-light) 100%);
+            z-index:10; pointer-events:none;
+        }
+
+        /* PAPER CARD */
+        .paper-card {
+            background:var(--ivory); border:1px solid rgba(196,168,130,.22);
+            box-shadow:0 2px 32px rgba(0,0,0,.04),0 1px 6px rgba(0,0,0,.02);
+            position:relative; overflow:hidden;
+        }
+        .paper-card::before {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 55%);
+            pointer-events:none;
+        }
+
+        /* SCROLL REVEAL */
+        .reveal {
+            opacity:0; transform:translateY(38px);
+            transition: opacity 1.4s cubic-bezier(0.16,1,0.3,1), transform 1.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal.active { opacity:1; transform:translateY(0); }
+
+        /* ORNAMENT */
+        .orn { display:flex; align-items:center; gap:14px; max-width:280px; margin:0 auto; }
+        .orn-line { flex:1; height:1px; background:linear-gradient(to right,transparent,var(--blush),transparent); }
+        .orn-diamond { width:5px; height:5px; background:var(--blush); transform:rotate(45deg); flex-shrink:0; }
+
+        /* CAROUSEL */
+        .carousel-container { overflow:hidden; position:relative; width:100%; }
+        .carousel-track { display:flex; transition:transform .72s cubic-bezier(0.76,0,0.24,1); }
+        .carousel-slide { flex:0 0 100%; height:58vh; overflow:hidden; position:relative; }
+        .carousel-slide img { width:100%; height:100%; object-fit:cover; transition:transform 7s ease; }
+        .carousel-slide.active img { transform:scale(1.05); }
+        @media(min-width:768px){ .carousel-slide{ height:68vh; } }
+        .dot { width:6px; height:6px; border-radius:50%; background:var(--blush); opacity:.35; transition:opacity .3s,transform .3s; cursor:pointer; }
+        .dot.active { opacity:1; transform:scale(1.4); }
+
+        /* FORM */
+        .min-inp {
+            width:100%; background:transparent; border:none;
+            border-bottom:1px solid rgba(196,168,130,.5);
+            padding:12px 0; font-family:'Jost',sans-serif; font-size:15px; color:#3a3a3a;
+            transition:border-color .35s ease;
+        }
+        .min-inp::placeholder { color:#b0a898; font-weight:300; }
+        .min-inp:focus { outline:none; border-bottom-color:var(--ocean); }
+
+        /* ACCORDION */
+        .acc-body {
+            max-height:0; opacity:0; overflow:hidden;
+            transition:max-height .55s cubic-bezier(0.4,0,0.2,1), opacity .5s ease;
+        }
+        .acc-body.open { max-height:360px; opacity:1; }
+        .acc-ico { transition:transform .4s cubic-bezier(0.34,1.56,0.64,1); }
+        .acc-ico.open { transform:rotate(45deg); }
+
+        /* IBAN PANEL */
+        #iban-panel { max-height:0; opacity:0; overflow:hidden; transition:max-height .6s ease, opacity .5s ease; }
+        #iban-panel.open { max-height:200px; opacity:1; }
+
+        /* VOLUME BUTTON */
+        #vol-btn {
+            position:fixed; bottom:26px; left:26px; z-index:200;
+            width:46px; height:46px; border-radius:50%;
+            background:rgba(254,252,248,.9); backdrop-filter:blur(10px);
+            border:1px solid rgba(196,168,130,.35);
+            box-shadow:0 4px 20px rgba(0,0,0,.1);
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; transition:background .25s, transform .2s;
+        }
+        #vol-btn:hover { background:#fff; transform:scale(1.07); }
+        #vol-btn svg { width:19px; height:19px; color:var(--ocean-deep); }
+
+        /* LANG BAR */
+        #lang-bar {
+            position:fixed; top:20px; right:20px; z-index:201;
+            display:flex; align-items:center; gap:2px;
+            background:rgba(254,252,248,.85); backdrop-filter:blur(12px);
+            border:1px solid rgba(196,168,130,.3); border-radius:100px;
+            padding:4px 6px; box-shadow:0 4px 20px rgba(0,0,0,.09);
+        }
+        .lang-btn {
+            font-family:'Jost',sans-serif; font-size:11px; font-weight:400;
+            letter-spacing:.1em; padding:5px 10px; border-radius:100px;
+            cursor:pointer; transition:background .2s,color .2s;
+            color:var(--ocean-deep); border:none; background:transparent; text-transform:uppercase;
+        }
+        .lang-btn.active { background:var(--ocean-deep); color:#fff; }
+
+        /* BUTTONS */
+        .btn-primary {
+            background:var(--ocean-deep); color:#fff;
+            font-family:'Jost',sans-serif; font-size:11px;
+            letter-spacing:.22em; text-transform:uppercase;
+            padding:16px 48px; border:none; cursor:pointer;
+            transition:background .3s, transform .2s, box-shadow .3s;
+        }
+        .btn-primary:hover { background:var(--ocean); transform:translateY(-1px); box-shadow:0 8px 24px rgba(44,95,132,.25); }
+        .btn-secondary {
+            background:transparent; color:var(--ocean-deep);
+            font-family:'Jost',sans-serif; font-size:11px;
+            letter-spacing:.22em; text-transform:uppercase;
+            padding:13px 36px; border:1px solid rgba(25,58,85,.3); cursor:pointer;
+            transition:background .3s,color .3s,border-color .3s;
+        }
+        .btn-secondary:hover { background:var(--ocean-deep); color:#fff; border-color:var(--ocean-deep); }
+
+        /* TIMELINE */
+        .tl-item { position:relative; padding-left:26px; }
+        .tl-item::before {
+            content:''; position:absolute; left:0; top:9px;
+            width:7px; height:7px; border-radius:50%;
+            background:var(--blush); border:2px solid var(--ivory);
+            box-shadow:0 0 0 1px var(--blush);
+        }
+        .tl-item:not(:last-child)::after {
+            content:''; position:absolute; left:3px; top:19px; bottom:-20px; width:1px;
+            background:linear-gradient(to bottom,var(--blush),transparent);
+        }
+
+        /* EYEBROW */
+        .eyebrow {
+            display:block; font-family:'Jost',sans-serif; font-size:10px;
+            letter-spacing:.35em; text-transform:uppercase; color:var(--blush); margin-bottom:10px;
+        }
+
+        /* SCROLL CUE */
+        @keyframes scroll-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+        #scroll-cue { animation:scroll-bounce 2.2s ease-in-out infinite; }
+
+        /* LANG DISPLAY */
+        [data-lang]        { display:none; }
+        [data-lang-inline] { display:none; }
+        .lang-it [data-lang="it"]        { display:block; }
+        .lang-en [data-lang="en"]        { display:block; }
+        .lang-de [data-lang="de"]        { display:block; }
+        .lang-it [data-lang-inline="it"] { display:inline; }
+        .lang-en [data-lang-inline="en"] { display:inline; }
+        .lang-de [data-lang-inline="de"] { display:inline; }
     </style>
 </head>
-<body>
+<body class="font-sans text-gray-700 antialiased lang-it selection:bg-ocean selection:text-white">
 
-    <audio id="paper-sound" src="freesound_community-folding-paper-34965.mp3" preload="auto"></audio>
-    <audio id="bg-music" src="storegraphic-soft-peaceful-piano-melody-309269.mp3" preload="auto" loop></audio>
-    <audio id="festive-sound" src="Festone_viralaudio-descent-whoosh-long-cinematic-sound-effect-405921.mp3" preload="auto"></audio>
+<!-- AUDIO -->
+<audio id="bg-music" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/01/26/audio_d0c6ff1c36.mp3?filename=ambient-piano-amp-strings-10711.mp3" type="audio/mpeg">
+</audio>
 
-    <button id="audio-toggle-btn" class="audio-toggle" aria-label="Mute/Unmute">
-        <svg id="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-        </svg>
-        <svg id="icon-muted" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-        </svg>
-    </button>
+<!-- LANG BAR — top right -->
+<div id="lang-bar">
+    <button class="lang-btn active" onclick="setLang('it')">IT</button>
+    <button class="lang-btn"        onclick="setLang('en')">EN</button>
+    <button class="lang-btn"        onclick="setLang('de')">DE</button>
+</div>
 
-    <div id="intro-section">
-        <div class="handwriting-container" id="hw-container">
-            <svg viewBox="0 0 1200 300" width="100%" height="100%">
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="svg-text">Abbiamo qualcosa da dirvi</text>
-            </svg>
-        </div>
-        <div class="save-the-date-text" id="std-text">SAVE THE DATE</div>
-        <div class="envelope-wrapper" id="envelope-wrap">
-            <div class="vellum-envelope">
-                <div class="invitation-card-inside">
-                    </div>
-                <div class="vellum-flap flap-left"></div>
-                <div class="vellum-flap flap-right">
-                    <div class="wax-seal"><div class="wax-seal-inner">M&M</div></div>
-                </div>
-            </div>
+<!-- VOLUME — bottom left -->
+<button id="vol-btn" title="Mute / Unmute" onclick="toggleVolume()">
+    <svg id="vol-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+              d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>
+    </svg>
+    <svg id="vol-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+              d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+    </svg>
+</button>
+
+<!-- ══════════════════════════════════════
+     UNBOXING LAYER
+══════════════════════════════════════ -->
+<div id="unboxing-layer" class="fixed inset-0 z-[100] cursor-pointer bg-sand">
+
+    <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-end z-20 pb-20">
+        <img src="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg?tr=w-1200,h-1600,f-auto,q-85,dpr-1"
+             alt="Invito Matrimonio Giulia e Lorenzo" loading="eager" decoding="async"
+             class="absolute inset-0 w-full h-full object-cover pointer-events-none" 
+             style="will-change: transform;">
+        <div id="tap-hint" class="relative z-30 flex flex-col items-center">
+            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium
+                         bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg"
+                  data-lang="it">Tocca per aprire</span>
+            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium
+                         bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg"
+                  data-lang="en">Tap to open</span>
+            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium
+                         bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg"
+                  data-lang="de">Tippen zum Öffnen</span>
         </div>
     </div>
 
-    <div id="main-content">
-        <div id="first-block-overlay">
-            <p class="ann-intro">Abbiamo scelto di dirci "sì" e vogliamo farlo accanto a chi rende speciale il nostro cammino.</p>
+    <video id="envelope-video" playsinline webkit-playsinline muted preload="auto"
+           class="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none">
+        <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779136621/video_busta_uff_gk7ejf.mp4" type="video/mp4">
+    </video>
+
+    <div id="luminous-flash" class="absolute inset-0 bg-white z-30 opacity-0 pointer-events-none"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN
+══════════════════════════════════════ -->
+<main id="main-content">
+
+    <!-- 1. HERO -->
+    <section class="relative w-full h-[100svh] flex items-center justify-center overflow-hidden">
+        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779030472/bagnoasciuga_npzshx.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black/28 z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent z-0"></div>
+
+        <div class="relative z-10 text-center text-white px-6 flex flex-col items-center w-full" style="margin-top:-6vh">
+
+            <span id="h-eye" class="hero-reveal d1 font-sans font-light tracking-[.38em] text-[9.5px] md:text-[11px] uppercase text-white/75 mb-6">
+                <span data-lang="it">Annunciano il loro matrimonio</span>
+                <span data-lang="en">Announce their wedding</span>
+                <span data-lang="de">Geben ihre Hochzeit bekannt</span>
+            </span>
+
+            <h1 id="h-names" class="hero-reveal d2 font-script leading-none drop-shadow-xl mb-3 text-sand font-normal"
+                style="font-size:clamp(5rem,18vw,11rem)">
+                Giulia &amp; Lorenzo
+            </h1>
+
+            <div id="h-orn" class="hero-reveal d3 orn my-5 opacity-40">
+                <span class="orn-line"></span>
+                <div class="orn-diamond"></div>
+                <div class="orn-diamond" style="margin:0 5px"></div>
+                <div class="orn-diamond"></div>
+                <span class="orn-line"></span>
+            </div>
+
+            <p id="h-det" class="hero-reveal d3 font-serif italic text-[17px] md:text-xl text-white/90 mb-1">
+                <span data-lang="it">Cerimonia Civile sulla Spiaggia</span>
+                <span data-lang="en">Civil Beach Ceremony</span>
+                <span data-lang="de">Standesamtliche Strandhochzeit</span>
+            </p>
+
+            <p id="h-date" class="hero-reveal d4 font-sans font-light tracking-[.25em] text-[12px] md:text-[15px] uppercase text-white/75 mt-3 mb-7">
+                20 Giugno 2027 &nbsp;·&nbsp; Sardegna
+            </p>
+
+            <p id="h-quote" class="hero-reveal d5 font-serif italic text-[18px] md:text-[22px] text-white/88 max-w-xl leading-relaxed drop-shadow px-2">
+                <span data-lang="it">"Saremmo felici di avervi con noi per brindare alla vita, all'amore e al nostro futuro insieme."</span>
+                <span data-lang="en">"We would be overjoyed to have you with us, toasting to life, love and our future together."</span>
+                <span data-lang="de">"Wir würden uns freuen, euch dabei zu haben — auf das Leben, die Liebe und unsere gemeinsame Zukunft."</span>
+            </p>
         </div>
 
-        <section class="announcement-section" id="announcement">
-            <div class="delayed-anim" id="second-block">
-                <div class="ann-names">Michela<br>&<br>Maurizio</div>
-                <p class="ann-title" style="margin-top: 35px;">Vi annunciamo con gioia<br>il nostro matrimonio</p>
-            </div>
+        <div id="scroll-cue" class="hero-reveal d5 absolute bottom-10 left-1/2 -translate-x-1/2 z-10 opacity-0 flex flex-col items-center">
+            <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.4">
+                <rect x="1" y="1" width="12" height="20" rx="6"/>
+                <line x1="7" y1="5" x2="7" y2="10"/>
+            </svg>
+        </div>
 
-            <div class="ornament-divider delayed-anim"><div class="line"></div><span>✦</span><div class="line"></div></div>
-            
-            <div class="delayed-anim">
-                <div class="date-hierarchy">
-                    <span class="date-day">Sabato</span>
-                    <span class="date-main">9 MAGGIO 2026</span>
-                    <span class="date-time">Ore 11.00</span>
-                </div>
-                <p class="ann-location">Chiesa di San Lorenzo - Via Redi 7<br>Tempio Pausania</p>
-            </div>
+        <div class="hero-fade"></div>
+    </section>
 
-            <div class="ornament-divider delayed-anim"><div class="line"></div><span>✦</span><div class="line"></div></div>
-            
-            <div class="delayed-anim" id="reception-block">
-                <p class="ann-reception">Dopo la cerimonia sarà un piacere<br>festeggiare con voi presso il Ristorante "Golden Gate"<br>Loc. La Fumosa - Bortigiadas</p>
-                <a href="https://maps.app.goo.gl/1zgkEC9B77r1wYaZ8?g_st=ic" target="_blank" class="map-link">Vedi su Mappa</a>
-            </div>
+    <!-- WRAPPER -->
+    <div class="bg-sand-light relative z-20 pb-28">
 
-            <div class="delayed-anim rsvp-block" id="rsvp-block">
-                <p class="ann-title rsvp-title">È gradita conferma</p>
-                <div class="rsvp-contacts">
-                    <div class="contact-person">
-                        <span class="contact-name">Michela</span>
-                        <a href="tel:+393464033212" class="contact-phone">346 403 3212</a>
+        <!-- 2. COUNTDOWN -->
+        <div class="max-w-4xl mx-auto px-5 pt-12 md:pt-16">
+            <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm">
+                <span class="eyebrow">
+                    <span data-lang="it">il grande giorno si avvicina</span>
+                    <span data-lang="en">the big day is approaching</span>
+                    <span data-lang="de">der große Tag rückt näher</span>
+                </span>
+                <h2 class="font-serif text-3xl md:text-4xl text-ocean-deep mb-10 font-light">
+                    <span data-lang="it">20 Giugno 2027</span>
+                    <span data-lang="en">June 20, 2027</span>
+                    <span data-lang="de">20. Juni 2027</span>
+                </h2>
+                <div class="flex justify-center gap-5 md:gap-14">
+                    <div class="flex flex-col items-center">
+                        <span id="days"    class="font-serif text-5xl md:text-7xl text-ocean font-light tabular-nums">00</span>
+                        <span class="font-sans text-[9px] md:text-[10px] uppercase tracking-[.25em] mt-2 text-blush">
+                            <span data-lang-inline="it">Giorni</span><span data-lang-inline="en">Days</span><span data-lang-inline="de">Tage</span>
+                        </span>
                     </div>
-                    <div class="contact-person">
-                        <span class="contact-name">Maurizio</span>
-                        <a href="tel:+393774623849" class="contact-phone">377 462 3849</a>
+                    <span class="font-serif text-5xl md:text-6xl text-sand font-light self-start mt-1 opacity-60">·</span>
+                    <div class="flex flex-col items-center">
+                        <span id="hours"   class="font-serif text-5xl md:text-7xl text-ocean font-light tabular-nums">00</span>
+                        <span class="font-sans text-[9px] md:text-[10px] uppercase tracking-[.25em] mt-2 text-blush">
+                            <span data-lang-inline="it">Ore</span><span data-lang-inline="en">Hours</span><span data-lang-inline="de">Stunden</span>
+                        </span>
+                    </div>
+                    <span class="font-serif text-5xl md:text-6xl text-sand font-light self-start mt-1 opacity-60">·</span>
+                    <div class="flex flex-col items-center">
+                        <span id="minutes" class="font-serif text-5xl md:text-7xl text-ocean font-light tabular-nums">00</span>
+                        <span class="font-sans text-[9px] md:text-[10px] uppercase tracking-[.25em] mt-2 text-blush">
+                            Min
+                        </span>
                     </div>
                 </div>
+            </section>
+        </div>
 
-                <div class="rsvp-form-container">
-                    <h3>Raccolta Presenze</h3>
-                    <div id="rsvp-feedback"></div>
-                    <form id="rsvp-form" onsubmit="window.submitRSVP(event)">
-                        <div class="form-group">
-                            <label for="names">Nome e Cognome degli ospiti</label>
-                            <input type="text" id="names" name="names" placeholder="Es. Luca e Michela" required>
+        <!-- DIVIDER 1 -->
+        <div class="w-full overflow-hidden py-14 md:py-20 reveal">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png"
+                 aria-hidden="true" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
+        </div>
+
+        <!-- 3. RSVP -->
+        <div class="max-w-4xl mx-auto px-5">
+            <section class="paper-card p-10 md:p-16 text-center reveal rounded-sm">
+                <span class="eyebrow">
+                    <span data-lang="it">rispondi all'invito</span>
+                    <span data-lang="en">reply to invitation</span>
+                    <span data-lang="de">auf Einladung antworten</span>
+                </span>
+                <h2 class="font-serif text-4xl md:text-5xl font-light text-ocean-deep mb-4">
+                    <span data-lang="it">Conferma Presenza</span>
+                    <span data-lang="en">RSVP</span>
+                    <span data-lang="de">Teilnahme bestätigen</span>
+                </h2>
+                <p class="font-sans font-light text-gray-500 mb-10 leading-relaxed text-[13px] md:text-sm max-w-md mx-auto">
+                    <span data-lang="it">Vi preghiamo di confermare entro il 20 Maggio 2027. Comunicateci eventuali allergie o preferenze alimentari.</span>
+                    <span data-lang="en">Please confirm attendance by 20 May 2027. Let us know about any allergies or dietary preferences.</span>
+                    <span data-lang="de">Bitte bestätigt die Teilnahme bis 20. Mai 2027. Teilt uns Allergien oder Ernährungswünsche mit.</span>
+                </p>
+                <div class="space-y-8 text-left max-w-md mx-auto">
+                    <input type="text" class="min-inp text-base"
+                           data-ph-it="Nome e Cognome" data-ph-en="Full Name" data-ph-de="Vor- und Nachname"
+                           placeholder="Nome e Cognome">
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <label class="font-sans text-[9px] uppercase tracking-[.2em] text-gray-400 block mb-2">
+                                <span data-lang-inline="it">Adulti</span><span data-lang-inline="en">Adults</span><span data-lang-inline="de">Erwachsene</span>
+                            </label>
+                            <select class="min-inp text-base"><option>1</option><option>2</option><option>3</option><option>4+</option></select>
                         </div>
-                        <div class="form-group">
-                            <label for="guests">Numero totale di persone</label>
-                            <select id="guests" name="guests" required>
-                                <option value="1">1 Persona</option>
-                                <option value="2" selected>2 Persone</option>
-                                <option value="3">3 Persone</option>
-                                <option value="4">4 Persone</option>
-                                <option value="5">5 Persone</option>
-                                <option value="6">6 Persone</option>
-                                <option value="7">7 Persone</option>
-                                <option value="8">8 Persone</option>
-                                <option value="9">9 Persone</option>
-                                <option value="10">10 Persone</option>
-                            </select>
+                        <div>
+                            <label class="font-sans text-[9px] uppercase tracking-[.2em] text-gray-400 block mb-2">
+                                <span data-lang-inline="it">Bambini</span><span data-lang-inline="en">Children</span><span data-lang-inline="de">Kinder</span>
+                            </label>
+                            <select class="min-inp text-base"><option>0</option><option>1</option><option>2</option><option>3+</option></select>
                         </div>
-                        <div class="form-group">
-                            <label for="notes">Intolleranze alimentari / Note</label>
-                            <textarea id="notes" name="notes" rows="3" placeholder="Es. Allergia al glutine, menù bimbi, ecc."></textarea>
-                        </div>
-                        <button type="submit" id="submit-rsvp-btn" class="submit-btn">Invia Conferma</button>
-                    </form>
+                    </div>
+                    <textarea rows="2" class="min-inp resize-none text-base"
+                              data-ph-it="Intolleranze, allergie o note…"
+                              data-ph-en="Allergies, intolerances or notes…"
+                              data-ph-de="Unverträglichkeiten oder Anmerkungen…"
+                              placeholder="Intolleranze, allergie o note…"></textarea>
+                    <div class="pt-4 text-center">
+                        <button class="btn-primary" onclick="handleRSVP(event)">
+                            <span data-lang-inline="it">Confermo la mia presenza</span>
+                            <span data-lang-inline="en">Confirm attendance</span>
+                            <span data-lang-inline="de">Teilnahme bestätigen</span>
+                        </button>
+                    </div>
                 </div>
+            </section>
+        </div>
+
+        <!-- FLORAL 1 -->
+        <div class="w-full overflow-hidden py-14 md:py-20 reveal">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png"
+                 aria-hidden="true" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
+        </div>
+
+        <!-- 4. SCHEDULE + DRESS CODE -->
+        <div class="max-w-4xl mx-auto px-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 reveal">
+
+                <section class="paper-card p-10 md:p-12 rounded-sm">
+                    <span class="eyebrow text-center block">
+                        <span data-lang="it">la giornata</span><span data-lang="en">the day</span><span data-lang="de">der Ablauf</span>
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-light text-ocean-deep mb-10 text-center">
+                        <span data-lang="it">Programma</span><span data-lang="en">Schedule</span><span data-lang="de">Programm</span>
+                    </h2>
+                    <div class="space-y-7">
+                        <div class="tl-item">
+                            <p class="font-serif text-ocean text-xl mb-1">18:00</p>
+                            <p class="font-sans font-light text-[13px] text-gray-600">
+                                <span data-lang="it">Cerimonia sulla spiaggia <em class="text-gray-400 text-xs">(Rito Civile)</em></span>
+                                <span data-lang="en">Beach ceremony <em class="text-gray-400 text-xs">(Civil rite)</em></span>
+                                <span data-lang="de">Strandhochzeit <em class="text-gray-400 text-xs">(Standesamtlich)</em></span>
+                            </p>
+                        </div>
+                        <div class="tl-item">
+                            <p class="font-serif text-ocean text-xl mb-1">19:30</p>
+                            <p class="font-sans font-light text-[13px] text-gray-600">
+                                <span data-lang="it">Aperitivo di Benvenuto</span>
+                                <span data-lang="en">Welcome Aperitif</span>
+                                <span data-lang="de">Willkommensaperitif</span>
+                            </p>
+                        </div>
+                        <div class="tl-item">
+                            <p class="font-serif text-ocean text-xl mb-1">21:00</p>
+                            <p class="font-sans font-light text-[13px] text-gray-600">
+                                <span data-lang="it">Cena &amp; Festa sotto le stelle</span>
+                                <span data-lang="en">Dinner &amp; Party under the stars</span>
+                                <span data-lang="de">Abendessen &amp; Feier unter Sternen</span>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="paper-card p-10 md:p-12 text-center flex flex-col justify-center rounded-sm">
+                    <span class="eyebrow">
+                        <span data-lang="it">come vestirsi</span><span data-lang="en">what to wear</span><span data-lang="de">was anziehen</span>
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-light text-ocean-deep mb-6">Dress Code</h2>
+                    <p class="font-sans font-light text-gray-500 leading-relaxed text-[13px] mb-5">
+                        <span data-lang="it">Cerimonia sulla sabbia: abiti leggeri, colori caldi e calzature comode. Sandali e piedi nudi sono i protagonisti.</span>
+                        <span data-lang="en">Beach ceremony: light outfits, warm colours and comfortable footwear. Sandals and bare feet are the real stars.</span>
+                        <span data-lang="de">Strandhochzeit: leichte Kleidung, warme Farben, bequeme Schuhe. Sandalen oder nackte Füße sind die Stars.</span>
+                    </p>
+                    <p class="font-serif italic text-ocean/70 text-lg">
+                        <span data-lang="it">Piedi nudi sempre ben accetti ✦</span>
+                        <span data-lang="en">Bare feet always welcome ✦</span>
+                        <span data-lang="de">Barfuß immer gerne ✦</span>
+                    </p>
+                </section>
             </div>
-        </section>
+        </div>
 
-        <section id="partecipazione">
-            <img src="https://drive.google.com/thumbnail?id=1Asx9_6mh0hkIE7s5WXSE3WO5aBc-3LaU&sz=w1200" onerror="this.onerror=null;this.src='https://drive.google.com/thumbnail?id=11yaZcFA1v0f9nRsOVey3ibXoCfKgqlfM&sz=w1200';" alt="Partecipazione" class="partecipazione-img delayed-anim" id="final-img">
-            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Matrimonio+Michela+e+Maurizio&dates=20260509T090000Z/20260509T220000Z&details=Celebrazione+del+matrimonio+di+Michela+e+Maurizio.+Vi+aspettiamo!&location=Chiesa+di+San+Lorenzo,+Via+Redi+7,+Tempio+Pausania" target="_blank" class="calendar-btn delayed-anim" id="cal-btn">Aggiungi al Calendario</a>
-            <div class="footer-credit delayed-anim">creato con ❤️ da <a href="https://announceyourday.com" target="_blank" style="color: inherit; text-decoration: none; font-weight: 500;">announceyourday.com</a></div>
-        </section>
-        
-        <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const hwContainer = document.getElementById('hw-container');
-            const stdText = document.getElementById('std-text');
-            const envelopeWrap = document.getElementById('envelope-wrap');
-            const introSection = document.getElementById('intro-section');
-            const mainContent = document.getElementById('main-content');
-            const paperSound = document.getElementById('paper-sound');
-            const bgMusic = document.getElementById('bg-music');
-            const festiveSound = document.getElementById('festive-sound');
-            
-            if (bgMusic) {
-                bgMusic.addEventListener('timeupdate', () => {
-                    if (bgMusic.duration && bgMusic.currentTime >= bgMusic.duration - 1.5) {
-                        bgMusic.currentTime = 0;
-                        bgMusic.play().catch(e => {});
-                    }
-                });
-            }
+        <!-- DIVIDER 2 -->
+        <div class="w-full overflow-hidden py-14 md:py-20 reveal">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png"
+                 aria-hidden="true" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
+        </div>
 
-            const audioToggleBtn = document.getElementById('audio-toggle-btn');
-            const iconUnmuted = document.getElementById('icon-unmuted');
-            const iconMuted = document.getElementById('icon-muted');
-            let isMuted = false;
+        <!-- 5. GALLERY -->
+        <div class="max-w-6xl mx-auto px-0 md:px-5">
+            <section class="reveal">
+                <div class="text-center mb-8 px-5">
+                    <span class="eyebrow">
+                        <span data-lang="it">i nostri momenti</span><span data-lang="en">our moments</span><span data-lang="de">unsere Momente</span>
+                    </span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-light text-ocean-deep">
+                        <span data-lang="it">I Nostri Ricordi</span><span data-lang="en">Our Memories</span><span data-lang="de">Unsere Erinnerungen</span>
+                    </h2>
+                </div>
 
-            audioToggleBtn.addEventListener('click', () => {
-                isMuted = !isMuted;
-                if (bgMusic) bgMusic.muted = isMuted;
-                if (festiveSound) festiveSound.muted = isMuted;
-                
-                iconUnmuted.style.display = isMuted ? 'none' : 'block';
-                iconMuted.style.display = isMuted ? 'block' : 'none';
+                <div class="relative w-full group">
+                    <div class="carousel-container shadow-lg md:rounded-sm">
+                        <div class="carousel-track" id="carouselTrack">
+                            <div class="carousel-slide active"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181850/IMG_3962_gswmvj.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181849/IMG_3961_kjl0tk.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181849/IMG_3960_dg9xh3.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181827/IMG_3957_r2vopq.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181827/IMG_3958_pkkzv7.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181826/IMG_3956_n4dvha.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181826/IMG_3959_hokgia.jpg" alt=""></div>
+                        </div>
+                    </div>
+                    <button id="prevBtn" class="absolute left-3 md:-left-5 top-1/2 -translate-y-1/2 bg-ivory/90 hover:bg-ivory text-ocean-deep p-3 md:p-4 rounded-full shadow-md opacity-100 md:opacity-0 group-hover:opacity-100 transition-all z-10 focus:outline-none">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button id="nextBtn" class="absolute right-3 md:-right-5 top-1/2 -translate-y-1/2 bg-ivory/90 hover:bg-ivory text-ocean-deep p-3 md:p-4 rounded-full shadow-md opacity-100 md:opacity-0 group-hover:opacity-100 transition-all z-10 focus:outline-none">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                    <div id="dots" class="flex justify-center gap-2 mt-5"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- FLORAL 2 -->
+        <div class="w-full overflow-hidden py-14 md:py-20 reveal">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png"
+                 aria-hidden="true" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
+        </div>
+
+        <div class="max-w-4xl mx-auto px-5 space-y-10">
+
+            <!-- 6. FAQ -->
+            <section class="paper-card p-10 md:p-14 reveal rounded-sm">
+                <span class="eyebrow text-center block">
+                    <span data-lang="it">tutto quello che serve sapere</span>
+                    <span data-lang="en">everything you need to know</span>
+                    <span data-lang="de">alles Wissenswerte</span>
+                </span>
+                <h2 class="font-serif text-3xl md:text-4xl font-light text-ocean-deep mb-10 text-center">
+                    <span data-lang="it">Info Utili</span><span data-lang="en">Useful Info</span><span data-lang="de">Nützliche Infos</span>
+                </h2>
+
+                <div class="space-y-1" id="faq-list">
+
+                    <div class="border-b border-sand/50 cursor-pointer" onclick="toggleAcc('a1','i1')">
+                        <div class="flex justify-between items-center py-4">
+                            <h3 class="font-sans text-[13px] md:text-sm font-medium text-ocean-deep pr-4">
+                                <span data-lang-inline="it">I bambini sono i benvenuti?</span>
+                                <span data-lang-inline="en">Are children welcome?</span>
+                                <span data-lang-inline="de">Sind Kinder willkommen?</span>
+                            </h3>
+                            <svg id="i1" class="acc-ico w-4 h-4 text-blush flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        </div>
+                        <div id="a1" class="acc-body">
+                            <p class="font-sans font-light text-[13px] text-gray-500 pb-4 leading-relaxed">
+                                <span data-lang="it">Assolutamente sì! Abbiamo previsto un menù dedicato e un'area animata sulla spiaggia dove potranno giocare in totale sicurezza.</span>
+                                <span data-lang="en">Absolutely! We have a dedicated children's menu and an animated beach area where they can play safely and happily.</span>
+                                <span data-lang="de">Selbstverständlich! Wir haben ein Kindermenü und einen betreuten Strandbereich vorbereitet.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-sand/50 cursor-pointer" onclick="toggleAcc('a2','i2')">
+                        <div class="flex justify-between items-center py-4">
+                            <h3 class="font-sans text-[13px] md:text-sm font-medium text-ocean-deep pr-4">
+                                <span data-lang-inline="it">C'è parcheggio disponibile?</span>
+                                <span data-lang-inline="en">Is parking available?</span>
+                                <span data-lang-inline="de">Gibt es einen Parkplatz?</span>
+                            </h3>
+                            <svg id="i2" class="acc-ico w-4 h-4 text-blush flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        </div>
+                        <div id="a2" class="acc-body">
+                            <p class="font-sans font-light text-[13px] text-gray-500 pb-4 leading-relaxed">
+                                <span data-lang="it">Sì, la location dispone di un ampio parcheggio privato e gratuito direttamente all'ingresso, riservato ai nostri ospiti.</span>
+                                <span data-lang="en">Yes, the venue has a large private free car park right at the entrance, reserved for our guests.</span>
+                                <span data-lang="de">Ja, die Location hat einen großen kostenlosen Privatparkplatz direkt am Eingang.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-b border-sand/50 cursor-pointer" onclick="toggleAcc('a3','i3')">
+                        <div class="flex justify-between items-center py-4">
+                            <h3 class="font-sans text-[13px] md:text-sm font-medium text-ocean-deep pr-4">
+                                <span data-lang-inline="it">Dove possiamo pernottare?</span>
+                                <span data-lang-inline="en">Where can we stay overnight?</span>
+                                <span data-lang-inline="de">Wo können wir übernachten?</span>
+                            </h3>
+                            <svg id="i3" class="acc-ico w-4 h-4 text-blush flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        </div>
+                        <div id="a3" class="acc-body">
+                            <p class="font-sans font-light text-[13px] text-gray-500 pb-4 leading-relaxed">
+                                <span data-lang="it">Abbiamo selezionato splendidi B&B e Hotel nelle vicinanze. Scriveteci in privato per ricevere la lista completa!</span>
+                                <span data-lang="en">We have handpicked wonderful B&Bs and hotels nearby. Message us privately to receive the full list!</span>
+                                <span data-lang="de">Wir haben tolle B&Bs und Hotels in der Nähe ausgewählt. Schreibt uns privat für die vollständige Liste!</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="cursor-pointer" onclick="toggleAcc('a4','i4')">
+                        <div class="flex justify-between items-center py-4">
+                            <h3 class="font-sans text-[13px] md:text-sm font-medium text-ocean-deep pr-4">
+                                <span data-lang-inline="it">E se il tempo non è clemente?</span>
+                                <span data-lang-inline="en">What if the weather isn't kind?</span>
+                                <span data-lang-inline="de">Was, wenn das Wetter nicht mitspielt?</span>
+                            </h3>
+                            <svg id="i4" class="acc-ico w-4 h-4 text-blush flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        </div>
+                        <div id="a4" class="acc-body">
+                            <p class="font-sans font-light text-[13px] text-gray-500 pb-4 leading-relaxed">
+                                <span data-lang="it">Nessun problema: la location dispone di una splendida area coperta direttamente sul mare, pensata per garantire la stessa atmosfera magica.</span>
+                                <span data-lang="en">No worries: the venue has a stunning covered seafront area designed to keep the same magical atmosphere as our plan B.</span>
+                                <span data-lang="de">Kein Problem: Die Location hat eine überdachte Terrasse am Meer als Plan B für dieselbe Zauberatmosphäre.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 7. IBAN -->
+            <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm">
+                <span class="eyebrow">
+                    <span data-lang="it">lista nozze</span><span data-lang="en">wedding gifts</span><span data-lang="de">Hochzeitsgeschenke</span>
+                </span>
+                <h2 class="font-serif text-3xl md:text-4xl font-light text-ocean-deep mb-5">
+                    <span data-lang="it">Un Pensiero per Noi</span>
+                    <span data-lang="en">A Thought for Us</span>
+                    <span data-lang="de">Ein Gedanke für uns</span>
+                </h2>
+                <p class="font-sans font-light text-gray-500 mb-9 leading-relaxed max-w-md mx-auto text-[13px] md:text-sm">
+                    <span data-lang="it">La vostra presenza è il regalo più grande. Se volete comunque farci un pensiero, potete contribuire al nostro viaggio di nozze.</span>
+                    <span data-lang="en">Your presence is the greatest gift. Should you wish to add something, you can contribute to our honeymoon.</span>
+                    <span data-lang="de">Eure Anwesenheit ist das schönste Geschenk. Wer möchte, kann zu unserer Hochzeitsreise beitragen.</span>
+                </p>
+                <button class="btn-secondary" onclick="toggleIban()">
+                    <span data-lang-inline="it">Mostra IBAN</span>
+                    <span data-lang-inline="en">Show IBAN</span>
+                    <span data-lang-inline="de">IBAN anzeigen</span>
+                </button>
+                <div id="iban-panel">
+                    <div class="inline-block border border-sand/50 px-8 py-7 mt-7 bg-white/60 backdrop-blur-sm">
+                        <p class="font-sans text-[9px] uppercase tracking-[.3em] text-gray-400 mb-3">Giulia &amp; Lorenzo</p>
+                        <p class="font-serif text-xl md:text-2xl text-ocean-deep tracking-wider">IT99 X123 4567 8900 0000 1234 567</p>
+                        <button onclick="copyIban()" class="mt-4 font-sans text-[10px] tracking-[.18em] uppercase text-blush hover:text-ocean transition-colors">
+                            ⎘&nbsp;<span data-lang-inline="it">Copia IBAN</span><span data-lang-inline="en">Copy IBAN</span><span data-lang-inline="de">IBAN kopieren</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. PHOTO APP -->
+            <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm" style="background:linear-gradient(160deg,var(--ivory) 0%,#f0ebe1 100%)">
+                <svg class="w-11 h-11 mx-auto text-ocean mb-6 opacity-55" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                    <circle cx="12" cy="13" r="3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+                </svg>
+                <span class="eyebrow">party app</span>
+                <h2 class="font-serif text-3xl md:text-4xl font-light text-ocean-deep mb-5">
+                    <span data-lang="it">Condividi le tue foto</span>
+                    <span data-lang="en">Share your photos</span>
+                    <span data-lang="de">Teile deine Fotos</span>
+                </h2>
+                <p class="font-sans font-light text-gray-500 leading-relaxed text-[13px] md:text-sm max-w-md mx-auto">
+                    <span data-lang="it">Scansiona il QR Code che troverai sui tavoli durante la festa per accedere all'app e condividere i tuoi scatti con noi.</span>
+                    <span data-lang="en">Scan the QR Code on the tables during the party to access the app and share your photos with us.</span>
+                    <span data-lang="de">Scanne den QR-Code auf den Tischen, um auf die App zuzugreifen und deine Fotos mit uns zu teilen.</span>
+                </p>
+            </section>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="w-full pt-20 pb-10 text-center reveal">
+            <div class="orn mb-7"><span class="orn-line"></span><div class="orn-diamond"></div><span class="orn-line"></span></div>
+            <p class="font-script text-5xl text-blush mb-7">Giulia &amp; Lorenzo</p>
+            <p class="font-sans text-[9px] md:text-[10px] tracking-[.3em] text-gray-400 uppercase">
+                <span data-lang="it">Creato con</span><span data-lang="en">Created with</span><span data-lang="de">Erstellt mit</span>
+                <span class="text-red-400 mx-1">♥</span>
+                <span data-lang="it">da</span><span data-lang="en">by</span><span data-lang="de">von</span>
+                &nbsp;<a href="https://www.announceyourday.com" target="_blank"
+                         class="hover:text-ocean transition-colors underline underline-offset-4">announceyourday.com</a>
+            </p>
+        </footer>
+
+    </div>
+</main>
+
+<script>
+/* ══════════════════════════════════
+   LANGUAGE
+══════════════════════════════════ */
+let currentLang = 'it';
+
+function setLang(lang) {
+    currentLang = lang;
+    document.body.classList.remove('lang-it','lang-en','lang-de');
+    document.body.classList.add('lang-' + lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b =>
+        b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang)
+    );
+    // Update placeholders
+    document.querySelectorAll('[data-ph-' + lang + ']').forEach(el =>
+        el.placeholder = el.getAttribute('data-ph-' + lang)
+    );
+}
+
+// Init placeholders on load
+document.querySelectorAll('[data-ph-it]').forEach(el =>
+    el.placeholder = el.getAttribute('data-ph-it')
+);
+
+/* ══════════════════════════════════
+   AUDIO / VOLUME
+══════════════════════════════════ */
+const audio  = document.getElementById('bg-music');
+const volOn  = document.getElementById('vol-on');
+const volOff = document.getElementById('vol-off');
+let muted    = false;
+audio.volume = 0.28;
+
+function toggleVolume() {
+    muted = !muted;
+    audio.muted = muted;
+    volOn.style.display  = muted ? 'none' : '';
+    volOff.style.display = muted ? '' : 'none';
+}
+
+// Pause when leaving page, resume when returning
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { audio.pause(); }
+    else if (!muted) { audio.play().catch(() => {}); }
+});
+window.addEventListener('blur',  () => audio.pause());
+window.addEventListener('focus', () => { if (!muted) audio.play().catch(() => {}); });
+
+/* ══════════════════════════════════
+   MAIN INIT
+══════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ─ UNBOXING ─
+    const layer       = document.getElementById('unboxing-layer');
+    const startScreen = document.getElementById('start-screen');
+    const envVid      = document.getElementById('envelope-video');
+    const flash       = document.getElementById('luminous-flash');
+    let   started     = false;
+
+    document.body.style.overflow = 'hidden';
+    window.scrollTo(0,0);
+
+    layer.addEventListener('click', () => {
+        if (started) return;
+        started = true;
+
+        // Trigger audio on user gesture
+        audio.play().catch(() => {});
+
+        // Fade out cover
+        startScreen.style.transition = 'opacity 0.35s';
+        startScreen.style.opacity    = '0';
+        setTimeout(() => startScreen.style.display = 'none', 380);
+
+        // Play envelope video (muted for autoplay policy)
+        envVid.muted = true;
+        envVid.play().catch(() => endUnboxing());
+    });
+
+    envVid.addEventListener('timeupdate', () => {
+        if (!isNaN(envVid.duration)) {
+            const rem = envVid.duration - envVid.currentTime;
+            if (rem <= 1.3 && rem > 0 && flash.style.opacity !== '1')
+                flash.style.opacity = '1';
+        }
+    });
+
+    envVid.addEventListener('ended', endUnboxing);
+
+    function endUnboxing() {
+        flash.style.opacity = '1';
+        layer.style.opacity = '0';
+        setTimeout(() => {
+            layer.style.display = 'none';
+            document.body.style.overflow = '';
+            ['h-eye','h-names','h-orn','h-det','h-date','h-quote','scroll-cue'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('visible');
             });
-            
-            setTimeout(() => {
-                hwContainer.classList.add('fade-up');
-                setTimeout(() => {
-                    stdText.classList.add('visible');
-                    setTimeout(() => {
-                        envelopeWrap.classList.add('visible');
-                        stdText.classList.add('evaporate');
-                    }, 1500);
-                }, 800);
-            }, 3800);
+            initReveal();
+        }, 1600);
+    }
 
-            const observerOptions = { root: null, rootMargin: '0px 0px -100px 0px', threshold: 0.15 };
-            const scrollObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        
-                        if (entry.target.id === 'rsvp-block') {
-                            if (festiveSound) { 
-                                festiveSound.currentTime = 0.6;
-                                festiveSound.volume = 0.6;
-                                festiveSound.play().catch(e => {}); 
-                            }
-                            
-                            setTimeout(() => {
-                                const duration = 850;
-                                const end = Date.now() + duration;
-                                (function frame() {
-                                    confetti({ particleCount: 2, angle: 60, spread: 45, origin: { x: 0, y: 0.85 }, colors: ['#D4AF37', '#B5952F', '#F9F1D8'] });
-                                    confetti({ particleCount: 2, angle: 120, spread: 45, origin: { x: 1, y: 0.85 }, colors: ['#D4AF37', '#B5952F', '#F9F1D8'] });
-                                    if (Date.now() < end) requestAnimationFrame(frame);
-                                }());
-                            }, 200);
-                        }
-                        
-                        observer.unobserve(entry.target); 
-                    }
-                });
-            }, observerOptions);
+    // ─ COUNTDOWN ─
+    const target = new Date('June 20, 2027 18:00:00').getTime();
+    function tick() {
+        const d = target - Date.now();
+        if (d <= 0) return;
+        document.getElementById('days').textContent    = String(Math.floor(d/864e5)).padStart(2,'0');
+        document.getElementById('hours').textContent   = String(Math.floor((d%864e5)/36e5)).padStart(2,'0');
+        document.getElementById('minutes').textContent = String(Math.floor((d%36e5)/6e4)).padStart(2,'0');
+    }
+    tick(); setInterval(tick, 60000);
 
-            envelopeWrap.addEventListener('click', () => {
-                if(envelopeWrap.classList.contains('opening')) return;
-                envelopeWrap.classList.add('opening');
-                
-                if (paperSound) {
-                    paperSound.volume = 0.8;
-                    paperSound.play().catch(e => {});
-                    setTimeout(() => {
-                        let pVol = 0.8;
-                        let fadeOutPaper = setInterval(() => {
-                            if (pVol > 0.1) { pVol -= 0.1; paperSound.volume = pVol; } 
-                            else { paperSound.pause(); clearInterval(fadeOutPaper); }
-                        }, 100);
-                    }, 2500);
-                }
-                if (bgMusic) { bgMusic.volume = 0; bgMusic.play().catch(e => {}); }
+    // ─ CAROUSEL ─
+    const track  = document.getElementById('carouselTrack');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dotsEl = document.getElementById('dots');
+    let   idx    = 0, timer;
 
-                // --- NUOVO FADE-IN AUDIO ANTICIPATO ---
-                // Svincolato dai timeout dei testi, parte dopo 2.5 secondi dal click sulla busta
-                setTimeout(() => {
-                    if (bgMusic) {
-                        let vol = 0;
-                        let fadeInterval = setInterval(() => {
-                            if (vol < 0.4) { vol += 0.05; bgMusic.volume = vol; } 
-                            else { clearInterval(fadeInterval); }
-                        }, 300);
-                    }
-                }, 2500);
+    slides.forEach((_,i) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i===0?' active':'');
+        d.onclick = () => { go(i); reset(); };
+        dotsEl.appendChild(d);
+    });
 
-                setTimeout(() => {
-                    introSection.classList.add('dive-in');
-                    mainContent.style.display = 'block';
-                    window.scrollTo(0, 0); 
-                    setTimeout(() => {
-                        introSection.style.display = 'none';
-                        const firstBlockOverlay = document.getElementById('first-block-overlay');
-                        firstBlockOverlay.classList.add('visible');
-                        setTimeout(() => {
-                            firstBlockOverlay.classList.remove('visible');
-                            firstBlockOverlay.classList.add('move-up');
-                            
-                            // Mostra il bottone audio in basso a destra
-                            audioToggleBtn.classList.add('visible');
+    function go(n) {
+        slides[idx].classList.remove('active');
+        dotsEl.children[idx].classList.remove('active');
+        idx = (n + slides.length) % slides.length;
+        slides[idx].classList.add('active');
+        dotsEl.children[idx].classList.add('active');
+        track.style.transform = `translateX(-${idx*100}%)`;
+    }
+    function reset() { clearInterval(timer); timer = setInterval(() => go(idx+1), 4200); }
 
-                            setTimeout(() => {
-                                document.body.style.overflowY = 'auto';
-                                document.documentElement.style.overflowY = 'auto';
-                                document.querySelectorAll('.delayed-anim').forEach(item => {
-                                    scrollObserver.observe(item);
-                                });
-                            }, 600); 
-                        }, 5500); 
-                    }, 1800); 
-                }, 6500); 
+    document.getElementById('nextBtn').onclick = () => { go(idx+1); reset(); };
+    document.getElementById('prevBtn').onclick = () => { go(idx-1); reset(); };
+    reset();
+
+    // ─ SCROLL REVEAL ─
+    function initReveal() {
+        const obs = new IntersectionObserver((entries, o) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('active'); o.unobserve(e.target); }
             });
-        });
-    </script>
+        }, { threshold:0.08, rootMargin:'0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    }
+
+    // ─ IBAN ─
+    window.toggleIban = () => document.getElementById('iban-panel').classList.toggle('open');
+    window.copyIban   = () => {
+        navigator.clipboard.writeText('IT99 X123 4567 8900 0000 1234 567').then(() => {
+            const msgs = {it:'IBAN copiato ✓',en:'IBAN copied ✓',de:'IBAN kopiert ✓'};
+            alert(msgs[currentLang]);
+        }).catch(()=>{});
+    };
+
+    // ─ RSVP ─
+    window.handleRSVP = e => {
+        e.preventDefault();
+        const msgs = {it:'Grazie! Ci vediamo il 20 Giugno ✦',en:'Thank you! See you on June 20th ✦',de:'Danke! Wir sehen uns am 20. Juni ✦'};
+        alert(msgs[currentLang]);
+    };
+
+});
+
+/* ══════════════════════════════════
+   ACCORDION
+══════════════════════════════════ */
+function toggleAcc(bodyId, iconId) {
+    document.getElementById(bodyId).classList.toggle('open');
+    document.getElementById(iconId).classList.toggle('open');
+}
+</script>
+
+<!-- Footer Credit -->
+<div style="position:fixed; bottom:10px; right:15px; z-index:50; font-size:11px; color:#999; text-align:right; pointer-events:none; font-family:'Jost',sans-serif; letter-spacing:.1em;">
+    <a href="https://announceyourday.com" style="color:#999; text-decoration:none; opacity:.7; transition:opacity .3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.7'">
+        creato con ❤️ da <strong style="color:#666;">announceyourday.com</strong>
+    </a>
+</div>
+
 </body>
 </html>
