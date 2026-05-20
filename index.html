@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Giulia & Lorenzo · 20 Giugno 2026</title>
+    <title>Giulia & Lorenzo · 20 Giugno 2027</title>
+
+    <!-- Open Graph / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Giulia & Lorenzo ✦ 20 Giugno 2027 · Sardegna">
+    <meta property="og:description" content="Due anime, una sola storia. Hai ricevuto il nostro invito digitale esclusivo. Apri per scoprire tutti i dettagli della nostra celebrazione.">
+    <meta property="og:image" content="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg?tr=w-1200,h-630,f-auto,q-80,c-fill">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="it_IT">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Giulia & Lorenzo ✦ 20 Giugno 2027">
+    <meta name="twitter:description" content="Hai ricevuto il nostro invito digitale esclusivo.">
+    <meta name="twitter:image" content="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg?tr=w-1200,h-630,f-auto,q-80,c-fill">
+    <!-- Creato con ❤️ da announceyourday.com -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -209,68 +223,67 @@
 </head>
 <body class="font-sans text-gray-700 antialiased lang-it selection:bg-ocean selection:text-white">
 
-<!-- 
-========================================================
-  MAPPA WIREFRAME - COMPONENT BASED ARCHITECTURE
-========================================================
-  [AUDIO_SECTION]    - Traccia audio di background
-  [NAV_SECTION]      - Controlli lingua e volume
-  [UNBOXING_LAYER]   - Intro overlay (Video busta)
-  [HERO_SECTION]     - Video Hero e Titoli principali
-  [COUNTDOWN_SECTION]- Conto alla rovescia
-  [RSVP_SECTION]     - Form di conferma
-  [SCHEDULE_SECTION] - Timeline evento e Dress Code
-  [GALLERY_SECTION]  - Carosello foto ottimizzato
-  [INFO_SECTION]     - FAQ interattive
-  [GIFT_SECTION]     - IBAN e lista nozze
-  [APP_SECTION]      - Riferimento alla Party App
-  [FOOTER_SECTION]   - Chiusura e firma brand
-========================================================
--->
-
-<!-- [AUDIO_SECTION] -->
+<!-- AUDIO -->
 <audio id="bg-music" loop preload="auto">
-    <!-- URL aggiornato con il file specificato dall'utente -->
-    <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779182848/audio_eghhhr.mp4" type="audio/mp4">
+    <source src="https://cdn.pixabay.com/download/audio/2022/01/26/audio_d0c6ff1c36.mp3?filename=ambient-piano-amp-strings-10711.mp3" type="audio/mpeg">
 </audio>
 
-<!-- [NAV_SECTION] -->
+<!-- LANG BAR — top right -->
 <div id="lang-bar">
     <button class="lang-btn active" onclick="setLang('it')">IT</button>
     <button class="lang-btn"        onclick="setLang('en')">EN</button>
     <button class="lang-btn"        onclick="setLang('de')">DE</button>
 </div>
 
+<!-- VOLUME — bottom left -->
 <button id="vol-btn" title="Mute / Unmute" onclick="toggleVolume()">
     <svg id="vol-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+              d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/>
     </svg>
     <svg id="vol-off" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+              d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
     </svg>
 </button>
 
-<!-- [UNBOXING_LAYER] -->
+<!-- ══════════════════════════════════════
+     UNBOXING LAYER
+══════════════════════════════════════ -->
 <div id="unboxing-layer" class="fixed inset-0 z-[100] cursor-pointer bg-sand">
+
     <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-end z-20 pb-20">
-        <!-- URL Cloudinary ottimizzato con f_auto,q_auto,w_800 -->
-        <img src="https://res.cloudinary.com/di7plu3yz/image/upload/f_auto,q_auto,w_800/v1779136621/video_busta_uff_gk7ejf.jpg"
-             alt="Copertina" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+        <img src="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg?tr=w-1200,h-1600,f-auto,q-85,dpr-1"
+             alt="Invito Matrimonio Giulia e Lorenzo" loading="eager" decoding="async"
+             class="absolute inset-0 w-full h-full object-cover pointer-events-none" 
+             style="will-change: transform;">
         <div id="tap-hint" class="relative z-30 flex flex-col items-center">
-            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg" data-lang="it">Tocca per aprire</span>
-            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg" data-lang="en">Tap to open</span>
-            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg" data-lang="de">Tippen zum Öffnen</span>
+            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium
+                         bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg"
+                  data-lang="it">Tocca per aprire</span>
+            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium
+                         bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg"
+                  data-lang="en">Tap to open</span>
+            <span class="text-white/95 text-[11px] tracking-[.35em] uppercase font-sans font-medium
+                         bg-black/20 px-5 py-2.5 rounded-full backdrop-blur-sm border border-white/15 drop-shadow-lg"
+                  data-lang="de">Tippen zum Öffnen</span>
         </div>
     </div>
-    <video id="envelope-video" playsinline webkit-playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none">
+
+    <video id="envelope-video" playsinline webkit-playsinline muted preload="auto"
+           class="absolute inset-0 w-full h-full object-cover z-10 pointer-events-none">
         <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779136621/video_busta_uff_gk7ejf.mp4" type="video/mp4">
     </video>
+
     <div id="luminous-flash" class="absolute inset-0 bg-white z-30 opacity-0 pointer-events-none"></div>
 </div>
 
+<!-- ══════════════════════════════════════
+     MAIN
+══════════════════════════════════════ -->
 <main id="main-content">
 
-    <!-- [HERO_SECTION] -->
+    <!-- 1. HERO -->
     <section class="relative w-full h-[100svh] flex items-center justify-center overflow-hidden">
         <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
             <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779030472/bagnoasciuga_npzshx.mp4" type="video/mp4">
@@ -279,13 +292,15 @@
         <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent z-0"></div>
 
         <div class="relative z-10 text-center text-white px-6 flex flex-col items-center w-full" style="margin-top:-6vh">
+
             <span id="h-eye" class="hero-reveal d1 font-sans font-light tracking-[.38em] text-[9.5px] md:text-[11px] uppercase text-white/75 mb-6">
                 <span data-lang="it">Annunciano il loro matrimonio</span>
                 <span data-lang="en">Announce their wedding</span>
                 <span data-lang="de">Geben ihre Hochzeit bekannt</span>
             </span>
 
-            <h1 id="h-names" class="hero-reveal d2 font-script leading-none drop-shadow-xl mb-3 text-sand font-normal" style="font-size:clamp(5rem,18vw,11rem)">
+            <h1 id="h-names" class="hero-reveal d2 font-script leading-none drop-shadow-xl mb-3 text-sand font-normal"
+                style="font-size:clamp(5rem,18vw,11rem)">
                 Giulia &amp; Lorenzo
             </h1>
 
@@ -304,13 +319,13 @@
             </p>
 
             <p id="h-date" class="hero-reveal d4 font-sans font-light tracking-[.25em] text-[12px] md:text-[15px] uppercase text-white/75 mt-3 mb-7">
-                20 Giugno 2026 &nbsp;·&nbsp; Sardegna
+                20 Giugno 2027 &nbsp;·&nbsp; Sardegna
             </p>
 
             <p id="h-quote" class="hero-reveal d5 font-serif italic text-[18px] md:text-[22px] text-white/88 max-w-xl leading-relaxed drop-shadow px-2">
-                <span data-lang="it">"Ogni storia d'amore è bella, ma la nostra è la nostra preferita."</span>
-                <span data-lang="en">"Every love story is beautiful — but ours is our favourite."</span>
-                <span data-lang="de">"Jede Liebesgeschichte ist schön — aber unsere ist unsere liebste."</span>
+                <span data-lang="it">"Due anime, una sola storia. La storia che stavamo aspettando da sempre."</span>
+                <span data-lang="en">"Two souls, one story. The story we've been waiting for all along."</span>
+                <span data-lang="de">"Zwei Seelen, eine Geschichte. Die Geschichte, auf die wir immer gewartet haben."</span>
             </p>
         </div>
 
@@ -327,7 +342,7 @@
     <!-- WRAPPER -->
     <div class="bg-sand-light relative z-20 pb-28">
 
-        <!-- [COUNTDOWN_SECTION] -->
+        <!-- 2. COUNTDOWN -->
         <div class="max-w-4xl mx-auto px-5 pt-12 md:pt-16">
             <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm">
                 <span class="eyebrow">
@@ -336,9 +351,9 @@
                     <span data-lang="de">der große Tag rückt näher</span>
                 </span>
                 <h2 class="font-serif text-3xl md:text-4xl text-ocean-deep mb-10 font-light">
-                    <span data-lang="it">20 Giugno 2026</span>
-                    <span data-lang="en">June 20, 2026</span>
-                    <span data-lang="de">20. Juni 2026</span>
+                    <span data-lang="it">20 Giugno 2027</span>
+                    <span data-lang="en">June 20, 2027</span>
+                    <span data-lang="de">20. Juni 2027</span>
                 </h2>
                 <div class="flex justify-center gap-5 md:gap-14">
                     <div class="flex flex-col items-center">
@@ -365,13 +380,13 @@
             </section>
         </div>
 
-        <!-- DIVIDER 1 (Ottimizzato e Lazy Loaded) -->
+        <!-- DIVIDER 1 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
-            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/f_auto,q_auto,w_800/v1779031325/linea_senza_sfondo_b8llc2.png"
-                 aria-hidden="true" loading="lazy" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png"
+                 aria-hidden="true" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
         </div>
 
-        <!-- [RSVP_SECTION] -->
+        <!-- 3. RSVP -->
         <div class="max-w-4xl mx-auto px-5">
             <section class="paper-card p-10 md:p-16 text-center reveal rounded-sm">
                 <span class="eyebrow">
@@ -385,9 +400,9 @@
                     <span data-lang="de">Teilnahme bestätigen</span>
                 </h2>
                 <p class="font-sans font-light text-gray-500 mb-10 leading-relaxed text-[13px] md:text-sm max-w-md mx-auto">
-                    <span data-lang="it">Vi preghiamo di confermare entro il 20 Maggio 2026. Comunicateci eventuali allergie o preferenze alimentari.</span>
-                    <span data-lang="en">Please confirm attendance by 20 May 2026. Let us know about any allergies or dietary preferences.</span>
-                    <span data-lang="de">Bitte bestätigt die Teilnahme bis 20. Mai 2026. Teilt uns Allergien oder Ernährungswünsche mit.</span>
+                    <span data-lang="it">Vi preghiamo di confermare entro il 20 Maggio 2027. Comunicateci eventuali allergie o preferenze alimentari.</span>
+                    <span data-lang="en">Please confirm attendance by 20 May 2027. Let us know about any allergies or dietary preferences.</span>
+                    <span data-lang="de">Bitte bestätigt die Teilnahme bis 20. Mai 2027. Teilt uns Allergien oder Ernährungswünsche mit.</span>
                 </p>
                 <div class="space-y-8 text-left max-w-md mx-auto">
                     <input type="text" class="min-inp text-base"
@@ -423,15 +438,16 @@
             </section>
         </div>
 
-        <!-- FLORAL 1 (Ottimizzato e Lazy Loaded) -->
+        <!-- FLORAL 1 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
-            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/f_auto,q_auto,w_800/v1779031507/fiori2_no_sfondo_kkf5uv.png"
-                 aria-hidden="true" loading="lazy" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png"
+                 aria-hidden="true" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
         </div>
 
-        <!-- [SCHEDULE_SECTION] -->
+        <!-- 4. SCHEDULE + DRESS CODE -->
         <div class="max-w-4xl mx-auto px-5">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 reveal">
+
                 <section class="paper-card p-10 md:p-12 rounded-sm">
                     <span class="eyebrow text-center block">
                         <span data-lang="it">la giornata</span><span data-lang="en">the day</span><span data-lang="de">der Ablauf</span>
@@ -488,11 +504,11 @@
 
         <!-- DIVIDER 2 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
-            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/f_auto,q_auto,w_800/v1779031325/linea_senza_sfondo_b8llc2.png"
-                 aria-hidden="true" loading="lazy" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png"
+                 aria-hidden="true" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
         </div>
 
-        <!-- [GALLERY_SECTION] (Tutte le immagini ottimizzate in delivery per risparmio banda) -->
+        <!-- 5. GALLERY -->
         <div class="max-w-6xl mx-auto px-0 md:px-5">
             <section class="reveal">
                 <div class="text-center mb-8 px-5">
@@ -507,13 +523,13 @@
                 <div class="relative w-full group">
                     <div class="carousel-container shadow-lg md:rounded-sm">
                         <div class="carousel-track" id="carouselTrack">
-                            <div class="carousel-slide active"><img loading="lazy" src="https://res.cloudinary.com/di7plu3yz/image/upload/w_800,c_fill,f_auto,q_auto/v1779181850/IMG_3962_gswmvj.jpg" alt="Memory"></div>
-                            <div class="carousel-slide"><img loading="lazy" src="https://res.cloudinary.com/di7plu3yz/image/upload/w_800,c_fill,f_auto,q_auto/v1779181849/IMG_3961_kjl0tk.jpg" alt="Memory"></div>
-                            <div class="carousel-slide"><img loading="lazy" src="https://res.cloudinary.com/di7plu3yz/image/upload/w_800,c_fill,f_auto,q_auto/v1779181849/IMG_3960_dg9xh3.jpg" alt="Memory"></div>
-                            <div class="carousel-slide"><img loading="lazy" src="https://res.cloudinary.com/di7plu3yz/image/upload/w_800,c_fill,f_auto,q_auto/v1779181827/IMG_3957_r2vopq.jpg" alt="Memory"></div>
-                            <div class="carousel-slide"><img loading="lazy" src="https://res.cloudinary.com/di7plu3yz/image/upload/w_800,c_fill,f_auto,q_auto/v1779181827/IMG_3958_pkkzv7.jpg" alt="Memory"></div>
-                            <div class="carousel-slide"><img loading="lazy" src="https://res.cloudinary.com/di7plu3yz/image/upload/w_800,c_fill,f_auto,q_auto/v1779181826/IMG_3956_n4dvha.jpg" alt="Memory"></div>
-                            <div class="carousel-slide"><img loading="lazy" src="https://res.cloudinary.com/di7plu3yz/image/upload/w_800,c_fill,f_auto,q_auto/v1779181826/IMG_3959_hokgia.jpg" alt="Memory"></div>
+                            <div class="carousel-slide active"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181850/IMG_3962_gswmvj.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181849/IMG_3961_kjl0tk.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181849/IMG_3960_dg9xh3.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181827/IMG_3957_r2vopq.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181827/IMG_3958_pkkzv7.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181826/IMG_3956_n4dvha.jpg" alt=""></div>
+                            <div class="carousel-slide"><img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779181826/IMG_3959_hokgia.jpg" alt=""></div>
                         </div>
                     </div>
                     <button id="prevBtn" class="absolute left-3 md:-left-5 top-1/2 -translate-y-1/2 bg-ivory/90 hover:bg-ivory text-ocean-deep p-3 md:p-4 rounded-full shadow-md opacity-100 md:opacity-0 group-hover:opacity-100 transition-all z-10 focus:outline-none">
@@ -529,13 +545,13 @@
 
         <!-- FLORAL 2 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
-            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/f_auto,q_auto,w_800/v1779031507/fiori2_no_sfondo_kkf5uv.png"
-                 aria-hidden="true" loading="lazy" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
+            <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png"
+                 aria-hidden="true" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
         </div>
 
         <div class="max-w-4xl mx-auto px-5 space-y-10">
 
-            <!-- [INFO_SECTION] (FAQ) -->
+            <!-- 6. FAQ -->
             <section class="paper-card p-10 md:p-14 reveal rounded-sm">
                 <span class="eyebrow text-center block">
                     <span data-lang="it">tutto quello che serve sapere</span>
@@ -547,6 +563,7 @@
                 </h2>
 
                 <div class="space-y-1" id="faq-list">
+
                     <div class="border-b border-sand/50 cursor-pointer" onclick="toggleAcc('a1','i1')">
                         <div class="flex justify-between items-center py-4">
                             <h3 class="font-sans text-[13px] md:text-sm font-medium text-ocean-deep pr-4">
@@ -622,7 +639,7 @@
                 </div>
             </section>
 
-            <!-- [GIFT_SECTION] (IBAN) -->
+            <!-- 7. IBAN -->
             <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm">
                 <span class="eyebrow">
                     <span data-lang="it">lista nozze</span><span data-lang="en">wedding gifts</span><span data-lang="de">Hochzeitsgeschenke</span>
@@ -653,7 +670,7 @@
                 </div>
             </section>
 
-            <!-- [APP_SECTION] -->
+            <!-- 8. PHOTO APP -->
             <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm" style="background:linear-gradient(160deg,var(--ivory) 0%,#f0ebe1 100%)">
                 <svg class="w-11 h-11 mx-auto text-ocean mb-6 opacity-55" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
@@ -674,7 +691,7 @@
 
         </div>
 
-        <!-- [FOOTER_SECTION] -->
+        <!-- FOOTER -->
         <footer class="w-full pt-20 pb-10 text-center reveal">
             <div class="orn mb-7"><span class="orn-line"></span><div class="orn-diamond"></div><span class="orn-line"></span></div>
             <p class="font-script text-5xl text-blush mb-7">Giulia &amp; Lorenzo</p>
@@ -683,7 +700,7 @@
                 <span class="text-red-400 mx-1">♥</span>
                 <span data-lang="it">da</span><span data-lang="en">by</span><span data-lang="de">von</span>
                 &nbsp;<a href="https://www.announceyourday.com" target="_blank"
-                        class="hover:text-ocean transition-colors underline underline-offset-4">announceyourday.com</a>
+                         class="hover:text-ocean transition-colors underline underline-offset-4">announceyourday.com</a>
             </p>
         </footer>
 
@@ -796,7 +813,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─ COUNTDOWN ─
-    const target = new Date('June 20, 2026 18:00:00').getTime();
+    const target = new Date('June 20, 2027 18:00:00').getTime();
     function tick() {
         const d = target - Date.now();
         if (d <= 0) return;
@@ -869,5 +886,13 @@ function toggleAcc(bodyId, iconId) {
     document.getElementById(iconId).classList.toggle('open');
 }
 </script>
+
+<!-- Footer Credit -->
+<div style="position:fixed; bottom:10px; right:15px; z-index:50; font-size:11px; color:#999; text-align:right; pointer-events:none; font-family:'Jost',sans-serif; letter-spacing:.1em;">
+    <a href="https://announceyourday.com" style="color:#999; text-decoration:none; opacity:.7; transition:opacity .3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.7'">
+        creato con ❤️ da <strong style="color:#666;">announceyourday.com</strong>
+    </a>
+</div>
+
 </body>
 </html>
