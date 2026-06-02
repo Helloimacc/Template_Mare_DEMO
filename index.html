@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Giulia & Lorenzo · 20 Giugno 2027</title>
 
+    <!-- Open Graph / WhatsApp Preview -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Giulia & Lorenzo ✦ 20 Giugno 2027 · Sardegna">
     <meta property="og:description" content="Due anime, una sola storia. Hai ricevuto il nostro invito digitale esclusivo. Apri per scoprire tutti i dettagli della nostra celebrazione.">
@@ -16,6 +17,8 @@
     <meta name="twitter:title" content="Giulia & Lorenzo ✦ 20 Giugno 2027">
     <meta name="twitter:description" content="Hai ricevuto il nostro invito digitale esclusivo.">
     <meta name="twitter:image" content="https://res.cloudinary.com/di7plu3yz/video/upload/so_0/v1779136621/video_busta_uff_gk7ejf.jpg?tr=w-1200,h-630,f-auto,q-80,c-fill">
+    <!-- Creato con ❤️ da announceyourday.com -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,10 +108,10 @@
         .orn-diamond { width:5px; height:5px; background:var(--blush); transform:rotate(45deg); flex-shrink:0; }
 
         /* CAROUSEL */
-        .carousel-container { overflow:hidden; position:relative; width:100%; }
-        .carousel-track { display:flex; transition:transform .72s cubic-bezier(0.76,0,0.24,1); }
-        .carousel-slide { flex:0 0 100%; height:58vh; overflow:hidden; position:relative; }
-        .carousel-slide img { width:100%; height:100%; object-fit:cover; transition:transform 7s ease; }
+        .carousel-container { position:relative; width:100%; }
+        .carousel-track { display:flex; overflow-x:hidden; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; width:100%; }
+        .carousel-slide { flex:0 0 100%; min-width:100%; scroll-snap-align:start; height:58vh; overflow:hidden; position:relative; }
+        .carousel-slide img { width:100%; height:100%; object-fit:cover; object-position:center; transition:transform 7s ease; display:block; }
         .carousel-slide.active img { transform:scale(1.05); }
         @media(min-width:768px){ .carousel-slide{ height:68vh; } }
         .dot { width:6px; height:6px; border-radius:50%; background:var(--blush); opacity:.35; transition:opacity .3s,transform .3s; cursor:pointer; }
@@ -206,6 +209,11 @@
         /* SCROLL CUE */
         @keyframes scroll-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
         #scroll-cue { animation:scroll-bounce 2.2s ease-in-out infinite; }
+        #scroll-cue .chev { animation:chev-fade 1.6s ease-in-out infinite; opacity:0; }
+        #scroll-cue .chev:nth-child(1) { animation-delay:0s; }
+        #scroll-cue .chev:nth-child(2) { animation-delay:0.3s; }
+        #scroll-cue .chev:nth-child(3) { animation-delay:0.6s; }
+        @keyframes chev-fade { 0%{opacity:0} 40%{opacity:.7} 100%{opacity:0} }
 
         /* LANG DISPLAY */
         [data-lang]        { display:none; }
@@ -220,16 +228,18 @@
 </head>
 <body class="font-sans text-gray-700 antialiased lang-it selection:bg-ocean selection:text-white">
 
+<!-- AUDIO -->
 <audio id="bg-music" loop preload="auto">
     <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779182848/audio_eghhhr.mp4" type="audio/mp4">
 </audio>
 
+<!-- LANG BAR — top right -->
 <div id="lang-bar">
     <button class="lang-btn active" onclick="setLang('it')">IT</button>
     <button class="lang-btn"        onclick="setLang('en')">EN</button>
-    <button class="lang-btn"        onclick="setLang('de')">DE</button>
 </div>
 
+<!-- VOLUME — bottom left -->
 <button id="vol-btn" title="Mute / Unmute" onclick="toggleVolume()">
     <svg id="vol-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
@@ -241,6 +251,9 @@
     </svg>
 </button>
 
+<!-- ══════════════════════════════════════
+     UNBOXING LAYER
+══════════════════════════════════════ -->
 <div id="unboxing-layer" class="fixed inset-0 z-[100] cursor-pointer bg-sand">
 
     <div id="start-screen" class="absolute inset-0 flex flex-col items-center justify-end z-20 pb-20">
@@ -269,8 +282,12 @@
     <div id="luminous-flash" class="absolute inset-0 bg-white z-30 opacity-0 pointer-events-none"></div>
 </div>
 
+<!-- ══════════════════════════════════════
+     MAIN
+══════════════════════════════════════ -->
 <main id="main-content">
 
+    <!-- 1. HERO -->
     <section class="relative w-full h-[100svh] flex items-center justify-center overflow-hidden">
         <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
             <source src="https://res.cloudinary.com/di7plu3yz/video/upload/v1779030472/bagnoasciuga_npzshx.mp4" type="video/mp4">
@@ -316,18 +333,20 @@
             </p>
         </div>
 
-        <div id="scroll-cue" class="hero-reveal d5 absolute bottom-10 left-1/2 -translate-x-1/2 z-10 opacity-0 flex flex-col items-center">
-            <svg width="14" height="22" viewBox="0 0 14 22" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1.4">
-                <rect x="1" y="1" width="12" height="20" rx="6"/>
-                <line x1="7" y1="5" x2="7" y2="10"/>
-            </svg>
+        <div id="scroll-cue" class="hero-reveal d5 absolute bottom-10 left-1/2 -translate-x-1/2 z-10 opacity-0 flex flex-col items-center gap-1" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))">
+            <span class="font-sans text-[9px] tracking-[.3em] uppercase mb-1" style="color:rgba(255,255,255,.9)">scorri</span>
+            <svg class="chev" width="18" height="10" viewBox="0 0 18 10" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,1 9,9 17,1"/></svg>
+            <svg class="chev" width="18" height="10" viewBox="0 0 18 10" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,1 9,9 17,1"/></svg>
+            <svg class="chev" width="18" height="10" viewBox="0 0 18 10" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,1 9,9 17,1"/></svg>
         </div>
 
         <div class="hero-fade"></div>
     </section>
 
+    <!-- WRAPPER -->
     <div class="bg-sand-light relative z-20 pb-28">
 
+        <!-- 2. COUNTDOWN -->
         <div class="max-w-4xl mx-auto px-5 pt-12 md:pt-16">
             <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm">
                 <span class="eyebrow">
@@ -365,11 +384,13 @@
             </section>
         </div>
 
+        <!-- DIVIDER 1 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
             <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png"
                  aria-hidden="true" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
         </div>
 
+        <!-- 3. RSVP -->
         <div class="max-w-4xl mx-auto px-5">
             <section class="paper-card p-10 md:p-16 text-center reveal rounded-sm">
                 <span class="eyebrow">
@@ -421,11 +442,13 @@
             </section>
         </div>
 
+        <!-- FLORAL 1 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
             <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png"
                  aria-hidden="true" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
         </div>
 
+        <!-- 4. SCHEDULE + DRESS CODE -->
         <div class="max-w-4xl mx-auto px-5">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 reveal">
 
@@ -483,11 +506,13 @@
             </div>
         </div>
 
+        <!-- DIVIDER 2 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
             <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031325/linea_senza_sfondo_b8llc2.png"
                  aria-hidden="true" class="w-full h-20 md:h-36 object-cover opacity-25 mix-blend-multiply">
         </div>
 
+        <!-- 5. GALLERY -->
         <div class="max-w-6xl mx-auto px-0 md:px-5">
             <section class="reveal">
                 <div class="text-center mb-8 px-5">
@@ -522,6 +547,7 @@
             </section>
         </div>
 
+        <!-- FLORAL 2 -->
         <div class="w-full overflow-hidden py-14 md:py-20 reveal">
             <img src="https://res.cloudinary.com/di7plu3yz/image/upload/v1779031507/fiori2_no_sfondo_kkf5uv.png"
                  aria-hidden="true" class="w-full h-44 md:h-60 object-cover opacity-20 mix-blend-multiply">
@@ -529,6 +555,7 @@
 
         <div class="max-w-4xl mx-auto px-5 space-y-10">
 
+            <!-- 6. FAQ -->
             <section class="paper-card p-10 md:p-14 reveal rounded-sm">
                 <span class="eyebrow text-center block">
                     <span data-lang="it">tutto quello che serve sapere</span>
@@ -616,6 +643,7 @@
                 </div>
             </section>
 
+            <!-- 7. IBAN -->
             <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm">
                 <span class="eyebrow">
                     <span data-lang="it">lista nozze</span><span data-lang="en">wedding gifts</span><span data-lang="de">Hochzeitsgeschenke</span>
@@ -646,6 +674,7 @@
                 </div>
             </section>
 
+            <!-- 8. PHOTO APP -->
             <section class="paper-card p-10 md:p-14 text-center reveal rounded-sm" style="background:linear-gradient(160deg,var(--ivory) 0%,#f0ebe1 100%)">
                 <svg class="w-11 h-11 mx-auto text-ocean mb-6 opacity-55" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
@@ -666,16 +695,10 @@
 
         </div>
 
+        <!-- FOOTER -->
         <footer class="w-full pt-20 pb-10 text-center reveal">
             <div class="orn mb-7"><span class="orn-line"></span><div class="orn-diamond"></div><span class="orn-line"></span></div>
             <p class="font-script text-5xl text-blush mb-7">Giulia &amp; Lorenzo</p>
-            <p class="font-sans text-[9px] md:text-[10px] tracking-[.3em] text-gray-400 uppercase">
-                <span data-lang="it">Creato con</span><span data-lang="en">Created with</span><span data-lang="de">Erstellt mit</span>
-                <span class="text-red-400 mx-1">♥</span>
-                <span data-lang="it">da</span><span data-lang="en">by</span><span data-lang="de">von</span>
-                &nbsp;<a href="https://www.announceyourday.com" target="_blank"
-                         class="hover:text-ocean transition-colors underline underline-offset-4">announceyourday.com</a>
-            </p>
         </footer>
 
     </div>
@@ -707,28 +730,31 @@ document.querySelectorAll('[data-ph-it]').forEach(el =>
 );
 
 /* ══════════════════════════════════
-   AUDIO / VOLUME
+   AUDIO
 ══════════════════════════════════ */
-const audio  = document.getElementById('bg-music');
-const volOn  = document.getElementById('vol-on');
-const volOff = document.getElementById('vol-off');
-let muted    = false;
-audio.volume = 0.28;
+const audioEl = document.getElementById('bg-music');
+const volOn   = document.getElementById('vol-on');
+const volOff  = document.getElementById('vol-off');
+let   muted   = false;
+audioEl.volume = 0.28;
+
+function startMusic() {
+    audioEl.play().catch(() => {});
+}
 
 function toggleVolume() {
     muted = !muted;
-    audio.muted = muted;
+    audioEl.muted        = muted;
     volOn.style.display  = muted ? 'none' : '';
-    volOff.style.display = muted ? '' : 'none';
+    volOff.style.display = muted ? ''     : 'none';
 }
 
-// Pause when leaving page, resume when returning
 document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { audio.pause(); }
-    else if (!muted) { audio.play().catch(() => {}); }
+    if (document.hidden) { audioEl.pause(); }
+    else if (!muted)     { audioEl.play().catch(() => {}); }
 });
-window.addEventListener('blur',  () => audio.pause());
-window.addEventListener('focus', () => { if (!muted) audio.play().catch(() => {}); });
+window.addEventListener('blur',  () => audioEl.pause());
+window.addEventListener('focus', () => { if (!muted) audioEl.play().catch(() => {}); });
 
 /* ══════════════════════════════════
    MAIN INIT
@@ -749,8 +775,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (started) return;
         started = true;
 
-        // Trigger audio on user gesture
-        audio.play().catch(() => {});
+        // Avvia la musica sul gesto utente
+        startMusic();
 
         // Fade out cover
         startScreen.style.transition = 'opacity 0.35s';
@@ -801,7 +827,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const track  = document.getElementById('carouselTrack');
     const slides = document.querySelectorAll('.carousel-slide');
     const dotsEl = document.getElementById('dots');
-    let   idx    = 0, timer;
+    let   idx = 0, timer;
 
     slides.forEach((_,i) => {
         const d = document.createElement('div');
@@ -816,9 +842,11 @@ document.addEventListener('DOMContentLoaded', () => {
         idx = (n + slides.length) % slides.length;
         slides[idx].classList.add('active');
         dotsEl.children[idx].classList.add('active');
-        track.style.transform = `translateX(-${idx*100}%)`;
+        // scrollLeft: più affidabile di transform su Safari iPhone
+        const w = track.offsetWidth;
+        track.scrollLeft = idx * w;
     }
-    function reset() { clearInterval(timer); timer = setInterval(() => go(idx+1), 4200); }
+    function reset() { clearInterval(timer); timer = setInterval(() => go(idx+1), 3000); }
 
     document.getElementById('nextBtn').onclick = () => { go(idx+1); reset(); };
     document.getElementById('prevBtn').onclick = () => { go(idx-1); reset(); };
@@ -861,11 +889,25 @@ function toggleAcc(bodyId, iconId) {
 }
 </script>
 
-<div style="position:fixed; bottom:10px; right:15px; z-index:50; font-size:11px; color:#999; text-align:right; pointer-events:none; font-family:'Jost',sans-serif; letter-spacing:.1em;">
-    <a href="https://announceyourday.com" style="color:#999; text-decoration:none; opacity:.7; transition:opacity .3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.7'">
-        creato con ❤️ da <strong style="color:#666;">announceyourday.com</strong>
+<!-- [FOOTER] Premium Signature with Instagram Icon -->
+<footer class="py-6 text-center text-[var(--sand)] text-[9px] font-sans tracking-widest bg-[var(--ocean)]/10 border-t border-[var(--ocean)]/30 backdrop-blur-sm">
+    <a href="https://announceyourday.com" target="_blank" class="text-[var(--ocean)] hover:text-[#1E3F5A] transition-colors inline-flex items-center gap-1">
+        announceyourday.com
+        <svg class="w-3 h-3 stroke-[var(--ocean)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+        </svg>
+    </a> 
+    | 
+    <a href="https://www.instagram.com/announceyourday/" target="_blank" class="text-[var(--ocean)] hover:text-[#1E3F5A] transition-colors inline-flex items-center gap-1">
+        <svg class="w-3 h-3 fill-[var(--ocean)] hover:fill-[#1E3F5A]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5m0-2a7 7 0 0 0-7 7v10a7 7 0 0 0 7 7h10a7 7 0 0 0 7-7V7a7 7 0 0 0-7-7H7z"/><circle cx="12" cy="12" r="3"/><circle cx="17.5" cy="6.5" r="1.5"/>
+        </svg>
+        <span>announceyourday</span>
+        <svg class="w-3 h-3 stroke-[var(--ocean)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+        </svg>
     </a>
-</div>
+</footer>
 
 </body>
 </html>
